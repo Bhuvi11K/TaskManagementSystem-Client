@@ -1,0 +1,48 @@
+<mat-card class="dev-dashboard" fxLayout="row" *ngIf="assignedTasks.length > 0">
+
+    <div fxFlex="40%" fxLayout="row" fxLayoutAlign="center center">
+        <img src="./assets/tasks.jpg" alt="Profile" style="height: 400px;">
+    </div>
+
+
+    <div fxFlex="60" class="d-db-right">
+        <h3>YOUR TASKS</h3>
+      
+        <div *ngFor="let task of assignedTasks" fxLayoutAlign="center center" fxLayout="column">
+      
+          <mat-toolbar id="d-task" fxLayout="row">
+            <div fxFlex="80%" fxLayoutAlign="center center">
+              <p>{{ task.task }}</p>
+            </div>
+            <div fxFlex="20%" fxLayoutAlign="center center" id="duration">
+              <ng-container *ngIf="hasDuration(task.id)">
+                <mat-list-item>
+                  <mat-list style="text-align: center;">
+                    <span matListItemLine id="taskTime">Completion <br> Time:
+                      <b>{{ getDuration(task.id) }}</b>
+                    </span>
+                    <span matListItemTitle></span>
+                  </mat-list>
+                </mat-list-item>
+              </ng-container>
+              <ng-container *ngIf="!hasDuration(task.id)">
+                <button mat-mini-fab color="primary" (click)="openDurationModal(task.id)">
+                  <mat-icon>schedule</mat-icon>
+                </button>
+              </ng-container>
+            </div>
+          </mat-toolbar>
+      
+        </div>
+      </div>
+      
+
+</mat-card>
+
+<mat-card class="dev-dashboard" fxLayout="row" *ngIf="assignedTasks.length === 0">
+
+    <div fxFlex="100%" fxLayout="row" fxLayoutAlign="center center">
+        <img src="./assets/noTask.jpeg" alt="Profile" style="height: 450px;">
+    </div>
+
+</mat-card>

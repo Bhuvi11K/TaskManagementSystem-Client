@@ -1,0 +1,76 @@
+<mat-card class="manager-dashboard" fxLayout="row">
+
+  <div fxFlex="30" fxLayout="column" class="db-left">
+    <div fxFlex="80" fxLayout="row" fxLayoutAlign="center none">
+      <mat-list id="developer-list">
+        <h3>YOUR TEAM</h3>
+        <mat-list-item id="deveoper-list-member" *ngFor="let developer of developers"
+          [class.selected]="developer.name === developerName" (click)="selectedDeveloper(developer)"
+          (click)="getAssignedTasks(developer.id)">
+          <p>{{developer.name | titlecase}}</p>
+        </mat-list-item>
+
+      </mat-list>
+    </div>
+
+    <div fxFlex="20" fxLayout="row" fxLayoutAlign="start center" id="btn">
+      <button mat-raised-button color="primary" (click)=" openTaskDialog()">Assign Task</button>
+    </div>
+
+  </div>
+
+  <div fxFlex="70" class="m-db-right" *ngIf="assignedTasks.length > 0">
+    <h3>ASSIGNED TASKS</h3>
+
+    <div *ngFor="let task of assignedTasks" fxLayoutAlign="center center" fxLayout="column">
+
+
+      <mat-toolbar id="m-task">
+        <div fxFlex="75%" fxLayoutAlign="center center">
+          <p>{{ task.task }}</p>
+        </div>
+        <div fxFlex="15%" fxLayoutAlign="center center">
+          <ng-container *ngIf="hasDuration(task.id)">
+            <mat-list-item>
+              <mat-list fxLayoutAlign="center center">
+                <span id="taskTime">
+                  <p>Completion <br> Time:
+                    <b>{{ getDuration(task.id) }}</b>
+                  </p>
+                </span>
+
+              </mat-list>
+            </mat-list-item>
+          </ng-container>
+          <ng-container *ngIf="!hasDuration(task.id)">
+            <span id="taskTime">
+              <p>Completion time <br> is not provided</p>
+            </span>
+          </ng-container>
+        </div>
+        <div fxFlex="10%" fxLayoutAlign="center center">
+          <button mat-mini-fab color="primary" id="edit-btn" (click)="openEditDialog(task)">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button mat-mini-fab color="warn" id="del-btn" (click)="openDeleteDialog(task)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          
+        </div>
+      </mat-toolbar>
+
+
+    </div>
+  </div>
+
+  <div fxFlex="70" class="m-db-right" fxLayoutAlign="center center"
+    *ngIf="assignedTasks.length === 0 && devSelected===true">
+    <img src="./assets/noTask.jpeg" alt="No task assigned" style="height: 350px;">
+  </div>
+
+  <div fxFlex="70" class="m-db-right" fxLayoutAlign="center center" *ngIf=" devSelected===false">
+    <img src="./assets/profile.jpg" alt="Manager Dashboard" style="height: 350px;border-radius: 50%;">
+  </div>
+
+</mat-card>

@@ -1,0 +1,9 @@
+
+.navbar {
+  justify-content: space-between;
+  font-family: "Roboto", sans-serif !important;
+}
+
+button {
+  padding-right: 1.2rem;
+}

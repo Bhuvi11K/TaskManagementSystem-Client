@@ -1,0 +1,207 @@
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ApiService } from 'src/app/api-service/api.service';
+import { AuthService } from 'src/app/auth/auth.service';
+import { NotificationService } from 'src/app/auth/notification.service';
+import { DeleteModalComponent } from 'src/app/modal-dialog/delete-modal/delete-modal.component';
+import { TaskEditModalComponent } from 'src/app/modal-dialog/task/task-edit-modal/task-edit-modal.component';
+import { TaskModalDialogComponent } from 'src/app/modal-dialog/task/task-modal-dialog/task-modal-dialog.component';
+import { TaskEditData } from 'src/app/modal/user.model';
+
+@Component({
+  selector: 'app-manager-dashboard',
+  templateUrl: './manager-dashboard.component.html',
+  styleUrls: ['./manager-dashboard.component.css'],
+})
+export class ManagerDashboardComponent implements OnInit {
+  userData: any = {};
+  developers: any[] = [];
+  assignedTasks: any[] = [];
+  taskDuration: any[] = [];
+  devSelected = false;
+  developerId!: number;
+  developerName = '';
+  developer: any;
+
+  constructor(
+    public dialog: MatDialog,
+    private authService: AuthService,
+    private apiService: ApiService,
+    private notificationService: NotificationService
+  ) {}
+
+  ngOnInit(): void {
+    this.getUserData();
+    this.fetchDevelopers();
+  }
+
+  selectedDeveloper(developer: any) {
+    this.developerName = developer.name;
+    this.developer = developer;
+  }
+
+  getUserData(): void {
+    const userDataString = localStorage.getItem('userData');
+
+    if (userDataString !== null) {
+      this.userData = JSON.parse(userDataString);
+    } else {
+      this.userData = {};
+    }
+  }
+
+  fetchDevelopers(): void {
+    const managerId = this.userData.id;
+    // console.log('Manager ID:', managerId);
+
+    this.apiService.getDevelopersForManager(managerId).subscribe(
+      (data: any) => {
+        // console.log('Response data:', data);
+        this.developers = data;
+        // console.log('Developers mapped to the manager:', this.developers);
+      },
+      (error) => {
+        console.error('Error fetching developers for the manager:', error);
+      }
+    );
+  }
+
+  getAssignedTasks(developerId: number): void {
+    this.devSelected = true;
+    this.developerId = developerId;
+
+    this.apiService.getAssignedTasks(developerId).subscribe(
+      (data: any) => {
+        this.assignedTasks = data;
+        console.log('Assigned tasks:', this.assignedTasks);
+      },
+      (error) => {
+        console.error('Error fetching assigned tasks:', error);
+      }
+    );
+    this.getTaskDuration();
+  }
+
+  openTaskDialog() {
+    const dialogRefTask = this.dialog.open(TaskModalDialogComponent, {
+      width: '300px',
+      data: {
+        developers: this.developers,
+      },
+    });
+    dialogRefTask.afterClosed().subscribe((taskForm) => {
+      if (taskForm) {
+        const developerId = taskForm.developer;
+        const task = taskForm.task;
+        console.log('developerId:', developerId, 'task:', task);
+        this.addTask(developerId, task);
+      }
+    });
+  }
+
+  addTask(developerId: number, task: string) {
+    this.apiService.createTask(developerId, task).subscribe(
+      (data: any) => {
+        console.log('Task created successfully:', data);
+        this.notificationService.showNotification('Task created successfully');
+        this.getAssignedTasks(developerId);
+        this.getTaskDuration();
+      },
+      (error) => {
+        console.error('Error creating task:', error);
+        this.notificationService.showNotification(
+          'Error creating task, Try again !'
+        );
+      }
+    );
+  }
+
+  openEditDialog(task: any) {
+    const dialogRefTask = this.dialog.open(TaskEditModalComponent, {
+      width: '300px',
+      data: { task },
+    });
+    dialogRefTask.afterClosed().subscribe((updatedTask: any) => {
+      if (updatedTask) {
+        const { developerId, taskId, task } = updatedTask;
+        console.log(
+          'taskId:',
+          taskId,
+          'developerId:',
+          developerId,
+          'task:',
+          task
+        );
+        this.updateTask(taskId, developerId, task);
+      }
+    });
+  }
+
+  updateTask(taskId: number, developerId: number, task: string) {
+    this.apiService.updateTask(taskId, developerId, task).subscribe(
+      (data: any) => {
+        console.log('Task Updated Successfully', data);
+        this.notificationService.showNotification('Task Updated Successfully!');
+        this.getAssignedTasks(developerId);
+      },
+      (error) => {
+        console.log('Task Updation Failure!', error);
+        this.notificationService.showNotification('Task Updated Failure!');
+      }
+    );
+  }
+
+  getTaskDuration() {
+    const developerId = this.developerId;
+
+    this.apiService.getTaskDuration(developerId).subscribe(
+      (data: any) => {
+        this.taskDuration = data;
+        console.log('Task duration:', this.taskDuration);
+      },
+      (error) => {
+        console.error('Error fetching task duration:', error);
+      }
+    );
+  }
+
+  hasDuration(taskId: number): boolean {
+    return this.taskDuration.some((item) => item.task_id === taskId);
+  }
+
+  getDuration(taskId: number): string {
+    const durationItem = this.taskDuration.find(
+      (item) => item.task_id === taskId
+    );
+    return durationItem ? durationItem.duration : '';
+  }
+
+  openDeleteDialog(task: any) {
+    const dialogRef = this.dialog.open(DeleteModalComponent, {
+      width: '300px',
+      data: { taskId: task.id },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.confirmed) {
+        const taskId = result.taskId;
+
+        this.deleteTask(taskId);
+      }
+    });
+  }
+  deleteTask(taskId: number) {
+    this.apiService.deleteTask(taskId).subscribe(
+      () => {
+        console.log('Task Deletion successful');
+        this.notificationService.showNotification('Task Deletion successful');
+        this.getAssignedTasks(this.developerId);
+        this.getTaskDuration();
+      },
+      (error) => {
+        console.error('Deletion error:', error);
+        this.notificationService.showNotification('Task Deletion Failure');
+      }
+    );
+  }
+}

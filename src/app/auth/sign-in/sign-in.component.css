@@ -1,0 +1,20 @@
+
+.sign-in {
+  margin: 20px;
+  height: 450px;
+}
+
+.sign-in-form {
+  max-width: 40% !important;
+  margin-top: 60px;
+}
+
+.mat-button-disabled {
+  color: #fff;
+  background-color: #3f51b5;
+  margin-bottom: 5% !important;
+}
+
+.loader{
+  height:330px;
+}

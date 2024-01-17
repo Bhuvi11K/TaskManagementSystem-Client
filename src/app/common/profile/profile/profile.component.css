@@ -1,0 +1,19 @@
+.profile {
+  margin: 20px;
+  height: 450px;
+}
+
+.user-profile-data {
+  height: 350px;
+  margin: 50px;
+}
+
+#br-10{
+    border-radius: 15px;
+    color: #3f51b5;
+    text-align: center;
+}
+
+#usd{
+    height: 400px;
+}
