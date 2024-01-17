@@ -87,6 +87,21 @@ export class ApiService {
       );
   }
 
+  deleteDeveloperFromTeam(developerId: number): Observable<any> {
+    const token = this.getToken();
+    if (!token) {
+      return throwError('Token not found');
+    }
+
+    const headers = new HttpHeaders({ Authorization: token });
+    const body = { developerId };
+
+    return this.http.request<any>('delete', `${this.apiUrl}/deleteDeveloper`, {
+      headers,
+      body,
+    });
+  }
+
   createTask(developerId: number, task: string): Observable<any> {
     const token = this.getToken();
     if (!token) {

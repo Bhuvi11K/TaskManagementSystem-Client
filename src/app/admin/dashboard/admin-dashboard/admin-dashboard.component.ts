@@ -178,10 +178,25 @@ export class AdminDashboardComponent implements OnInit {
       if (delDevFormData) {
         const developerId = delDevFormData.developerId;
         console.log('deletionDevId:', developerId);
-        // this.deleteDeveloper();
+        this.deleteDeveloper(developerId);
       }
     });
   }
 
-  deleteDeveloper() {}
+  deleteDeveloper(developerId: number) {
+    this.apiService.deleteDeveloperFromTeam(developerId).subscribe(
+      (response) => {
+        console.log('Developer deleted from the Team', response);
+        this.notificationService.showNotification(
+          'Developer deleted successfully!'
+        );
+      },
+      (error) => {
+        console.log('Error deleting the developer from the team', error);
+        this.notificationService.showNotification(
+          'Error deleting the developer!'
+        );
+      }
+    );
+  }
 }

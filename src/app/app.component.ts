@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'Task-Management-System';
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.checkToken();
@@ -19,6 +20,8 @@ export class AppComponent implements OnInit {
     const token = localStorage.getItem('authToken');
 
     if (token) {
+      this.router.navigate(['/dashboard']);
+
       console.log('Token exists:', token);
     } else {
       console.log('Token does not exist');
