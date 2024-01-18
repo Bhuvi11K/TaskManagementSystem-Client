@@ -179,13 +179,13 @@ export class ManagerDashboardComponent implements OnInit {
   openDeleteDialog(task: any) {
     const dialogRef = this.dialog.open(DeleteModalComponent, {
       width: '300px',
-      data: { taskId: task.id },
+      // data: { taskId: task.id },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.confirmed) {
-        const taskId = result.taskId;
-
+        // const taskId = result.taskId;
+        const taskId = task.id;
         this.deleteTask(taskId);
       }
     });

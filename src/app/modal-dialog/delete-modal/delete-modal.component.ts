@@ -9,17 +9,22 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./delete-modal.component.css'],
 })
 export class DeleteModalComponent {
-  taskId: number;
+  // taskId: number;
 
-  constructor(
-    public dialogRef: MatDialogRef<DeleteModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-  ) {
-    this.taskId = data.taskId;
-  }
+  // constructor(
+  //   public dialogRef: MatDialogRef<DeleteModalComponent>,
+  //   @Inject(MAT_DIALOG_DATA) public data: any,
+  // ) {
+  //   this.taskId = data.taskId;
+  // }
+
+  // onDelete() {
+  //   this.dialogRef.close({ confirmed: true, taskId: this.taskId });
+  // }
+
+  constructor(public dialogRef: MatDialogRef<DeleteModalComponent>) {}
 
   onDelete() {
-    this.dialogRef.close({ confirmed: true, taskId: this.taskId });
+    this.dialogRef.close({ confirmed: true });
   }
 }
-

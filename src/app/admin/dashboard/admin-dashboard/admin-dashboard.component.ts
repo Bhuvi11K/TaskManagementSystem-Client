@@ -149,22 +149,35 @@ export class AdminDashboardComponent implements OnInit {
     );
   }
 
-  openDeleteTeamDialog(manager: any) {
+  openDeleteTeamDialog() {
     const dialogRef = this.dialog.open(DeleteModalComponent, {
       width: '300px',
-      data: { managerId: manager.id },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.confirmed) {
-        const taskId = result.taskId;
+        const managerId = this.managerId;
+        const developerIds = this.developers.map((developer) => developer.id);
+        console.log('managerId:', managerId, 'developerIds:', developerIds);
 
-        this.deleteTeam();
+        this.deleteTeam(managerId,developerIds);
       }
     });
   }
 
-  deleteTeam() {}
+  deleteTeam(managerId: number, developerIds: number[]) {
+    this.apiService.deleteTeam(managerId, developerIds).subscribe(
+      () => {
+        console.log('Team Deletion successful');
+        this.developers = [];
+        this.notificationService.showNotification('Team Deletion successful');
+      },
+      (error) => {
+        console.error('Deletion error:', error);
+        this.notificationService.showNotification('Team Deletion Failure');
+      }
+    );
+  }
 
   openDeleteDevDialog() {
     const dialogRef = this.dialog.open(DeleteDevModalComponent, {
@@ -190,6 +203,9 @@ export class AdminDashboardComponent implements OnInit {
         this.notificationService.showNotification(
           'Developer deleted successfully!'
         );
+        this.fetchunmappedDevelopers();
+        this.fetchJuniorDeveloperData();
+        this.getTeam(this.managerId);
       },
       (error) => {
         console.log('Error deleting the developer from the team', error);

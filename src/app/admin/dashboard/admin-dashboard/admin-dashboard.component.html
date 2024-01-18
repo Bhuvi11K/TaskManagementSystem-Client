@@ -45,7 +45,7 @@
 
   <div fxFlex="64" class="a-db-right" fxLayout="column" *ngIf="managerName !==''&& displayTask===false">
     <h3 *ngIf="developers.length>0"> {{ managerName | titlecase}}'s Team
-      <button mat-mini-fab color="warn" id="del-btn" (click)="openDeleteTeamDialog(managerId)">
+      <button mat-mini-fab color="warn" id="del-btn" (click)="openDeleteTeamDialog()">
         <mat-icon>delete</mat-icon>
       </button>
     </h3>

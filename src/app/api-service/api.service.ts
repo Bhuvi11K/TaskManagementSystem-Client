@@ -70,6 +70,21 @@ export class ApiService {
     });
   }
 
+  deleteTeam(managerId: number, developerIds: number[]): Observable<any> {
+    const token = this.getToken();
+    if (!token) {
+      return throwError('Token not found');
+    }
+
+    const headers = new HttpHeaders({ Authorization: token });
+    const body = { managerId, developerIds };
+
+    return this.http.request<any>('delete', `${this.apiUrl}/deleteTeam`, {
+      headers,
+      body,
+    });
+  }
+
   getUnmappedDevelopers(): Observable<any> {
     const token = this.getToken();
     if (!token) {
