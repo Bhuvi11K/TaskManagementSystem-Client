@@ -1,18 +1,17 @@
+<mat-toolbar color="primary" class="navbar">
+  <div style="margin-left: 50px;display: flex;">
+    <img src="./assets/TMS - Clock Logo.jpeg" alt="logo" style="height: 50px;border-radius: 50px;">
+    <h4 style="margin:10px 0px 0px 10px;font-size: 16px;">Task Management System</h4>
+  </div>
+  <div *ngIf="authService.isLoggedIn">
+    <button  mat-button routerLink="/users" *ngIf="userRole === 'Admin'">Users</button>
+    <button mat-button routerLink="/dashboard">Dashboard</button>
+    <button mat-button routerLink="/profile">Profile</button>
+    <button mat-button (click)="openLogoutDialog()">Logout</button>
 
-    <mat-toolbar color="primary" class="navbar">
-    <div style="margin-left: 50px;display: flex;">
-      <img src="./assets/logo.png" alt="logo" style="height: 50px;border-radius: 50px;">
-     <h4 style="margin:10px 0px 0px 6px;">Task Management</h4> 
-    </div>
-    <div *ngIf="authService.isLoggedIn">
-      <button mat-button routerLink="/dashboard">Dashboard</button > 
-      <button mat-button routerLink="/profile">Profile</button>
-      <button mat-button (click)="openLogoutDialog()">Logout</button>
-     
-    </div>
-    <div *ngIf="!authService.isLoggedIn">
-      <button mat-button routerLink="/signin">Sign in</button>
-      <button mat-button routerLink="/signup">Sign up</button>     
-    </div>
-    </mat-toolbar>
-  
+  </div>
+  <div *ngIf="!authService.isLoggedIn">
+    <button mat-button routerLink="/signin">Sign in</button>
+    <button mat-button routerLink="/signup">Sign up</button>
+  </div>
+</mat-toolbar>

@@ -16,7 +16,7 @@ export class DashboardComponent {
   }
 
   fetchUserRole(): void {
-    const userDataString = localStorage.getItem('userData'); 
+    const userDataString = localStorage.getItem('userData');
 
     if (userDataString !== null) {
       const userData = JSON.parse(userDataString);
@@ -32,7 +32,7 @@ export class DashboardComponent {
 
   checkAuthentication(): void {
     if (!this.authService.isLoggedIn) {
-      this.router.navigate(['/signin']); 
+      this.router.navigate(['/signin']);
     }
   }
 }

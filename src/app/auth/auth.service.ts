@@ -9,8 +9,8 @@ import { catchError, tap } from 'rxjs/operators';
 export class AuthService {
   isLoggedIn = false;
 
-  private apiUrl = 'http://localhost:3000/api';
-  private tokenKey = 'authToken'; 
+  private apiUrl = 'http://localhost:1102/api';
+  private tokenKey = 'authToken';
 
   constructor(private http: HttpClient) {}
 
@@ -30,11 +30,11 @@ export class AuthService {
 
   login(userData: any): Observable<any> {
     const loginUrl = `${this.apiUrl}/login`;
+
     return this.http.post<any>(loginUrl, userData).pipe(
       catchError(this.handleError),
       tap((response) => {
         if (response && response.token) {
-          // Store token in localStorage upon successful login
           localStorage.setItem(this.tokenKey, response.token);
           localStorage.setItem('userData', JSON.stringify(response.user));
           this.isLoggedIn = true;
@@ -48,17 +48,15 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem('userData');
     this.isLoggedIn = false;
-    // this.checkSession();
   }
 
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
-    } else {
-      console.error(
-        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
-      );
+  handleError(error: any) {
+    let errorMessage = 'Something went wrong; please try again later.';
+
+    if (error.error && error.error.error) {
+      errorMessage = error.error.error;
     }
-    return throwError('Something went wrong; please try again later.');
+
+    return throwError(errorMessage);
   }
 }

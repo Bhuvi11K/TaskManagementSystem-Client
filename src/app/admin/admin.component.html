@@ -1,1 +1,88 @@
-<p>admin works!</p>
+<mat-card class="admin-dashboard" fxLayout="row">
+
+    <div fxFlex="20" fxLayout="column" class="db-left">
+        <div fxLayoutAlign="center none">
+            <mat-list id="manager-list">
+                <h3 fxLayoutAlign="center center"> Managers</h3>
+                <mat-list-item *ngFor="let manager of managers" id="manager-list-member"
+                    [class.selected]="manager.name === userName" (click)="selectedUser(manager)">
+                    <p>{{ manager.name | titlecase}}</p>
+                </mat-list-item>
+            </mat-list>
+        </div>
+
+    </div>
+
+    <div fxFlex="20" fxLayout="column" class="db-left">
+        <div>
+            <mat-list id="manager-list">
+                <h3 fxLayoutAlign="center center"> Developers</h3>
+                <mat-list-item *ngFor="let developer of juniorDevelopers" id="deveoper-list-member"
+                    [class.selected]="developer.name === userName" (click)="selectedUser(developer)">
+                    <p>{{ developer.name | titlecase}}</p>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+
+
+
+    <div fxFlex="60%" class="user">
+        <ng-container *ngIf="showProfile">
+            <div class="user-profile">
+
+                <mat-card class="user-profile-data">
+                    <mat-card-header>
+                        <mat-toolbar id="br-10">
+                            <h3>User Details</h3>
+                        </mat-toolbar>
+                    </mat-card-header>
+                    <mat-card-content fxLayout="row" id="usd">
+                        <div fxFlex="50" fxLayoutAlign="center center" fxLayout="column">
+                            <div>
+                                <img src="./assets/user.jpg" alt="user" style="height: 150px;border-radius: 50%;"
+                                    fxLayoutAlign="center center">
+                            </div>
+                            <div>
+                                <button mat-raised-button color="warn" fxLayoutAlign="center center"
+                                    style="margin-top: 10px;" (click)="openConfirmModal()">
+                                    Delete User
+                                </button>
+                            </div>
+                        </div>
+                        <div fxFlex="50" fxLayoutAlign="start center">
+                            <mat-list>
+                                <mat-list-item>
+                                    <span matListItemTitle>Name</span>
+                                    <span matListItemLine>{{userName | titlecase}}</span>
+                                </mat-list-item>
+                                <mat-list-item>
+                                    <span matListItemTitle>Role</span>
+                                    <span matListItemLine>{{userRole | titlecase}}</span>
+                                </mat-list-item>
+                                <mat-list-item>
+                                    <span matListItemTitle>Email</span>
+                                    <span matListItemLine>{{userEmail}}</span>
+                                </mat-list-item>
+                            </mat-list>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!showProfile" fxLayoutAlign="center center">
+
+            <div class="user-profile">
+                <mat-card class="user-profile-data" fxLayoutAlign="center center">
+                    <img src="./assets/profile.jpg" alt="Profile" style="height: 350px;">
+                </mat-card>
+            </div>
+        </ng-container>
+    </div>
+
+
+
+
+
+
+</mat-card>

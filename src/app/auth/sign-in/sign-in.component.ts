@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { NotificationService } from '../notification.service';
 import { Subject, takeUntil } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,11 +17,14 @@ export class SignInComponent implements OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   constructor(
+    private titleService: Title,
     private formBuilder: FormBuilder,
-    private authService: AuthService, 
+    private authService: AuthService,
     private notificationService: NotificationService,
-    private router: Router 
-  ) {}
+    private router: Router
+  ) {
+    this.titleService.setTitle('TMS - Signin');
+  }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -29,44 +33,35 @@ export class SignInComponent implements OnDestroy {
     });
   }
 
-  onSubmit() {
+  onSignin() {
     if (this.loginForm && this.loginForm.valid) {
       this.isLoading = true;
       const loginData = this.loginForm.value;
+      this.onUserSignin(loginData);
+    }
+  }
 
-      this.authService
-      .login(loginData)
+  onUserSignin(signinData: any) {
+    this.authService
+      .login(signinData)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (response) => {
           console.log('User logged in successfully', response);
-         // Check if the token and user data are received in the response
-        // Log user data and token to the console
-        if (response && response.token && response.user) {
-          console.log('Received Token:', response.token);
-          console.log('User Data:', response.user);
-          this.router.navigate(['/dashboard']);
-        }
-        // Reset form and navigate to the next page
-        this.loginForm.reset();
-        this.isLoading = false;
+          if (response && response.token && response.user) {
+            console.log('Received Token:', response.token);
+            console.log('User Data:', response.user);
+            this.router.navigate(['/dashboard']);
+          }
+          this.loginForm.reset();
+          this.isLoading = false;
         },
         (error) => {
           console.error('Error during login', error);
           this.isLoading = false;
-        
-          if (error.status === 401) {
-            if (error.error.error === 'Invalid Email') {
-              this.notificationService.showNotification('Email not found');
-            } else if (error.error.error === 'Incorrect Password') {
-              this.notificationService.showNotification('Incorrect password');
-            }
-          } else {
-            this.notificationService.showNotification('Something went wrong; please try again later.');
-          }
-        }          
+          this.notificationService.showNotification(error);
+        }
       );
-    }
   }
 
   onLogout() {
@@ -77,10 +72,9 @@ export class SignInComponent implements OnDestroy {
     console.log('Token After Logout:', tokenAfterLogout); // Should log null or undefined
     // Perform any additional logout actions if needed
   }
-  
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
 }

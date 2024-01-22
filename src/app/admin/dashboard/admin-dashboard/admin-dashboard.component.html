@@ -3,7 +3,7 @@
   <div fxFlex="12" fxLayout="column" class="db-left">
     <div fxFlex="80" fxLayout="row" fxLayoutAlign="center none">
       <mat-list id="manager-list">
-        <h3>ALL MANAGERS</h3>
+        <h3 fxLayoutAlign="center center"> Managers</h3>
         <mat-list-item *ngFor="let manager of managers" id="manager-list-member"
           [class.selected]="manager.name === managerName" (click)="getTeam(manager.id)"
           (click)="selectedManager(manager)">
@@ -18,22 +18,11 @@
 
   </div>
 
-  <div fxFlex="12" fxLayout="column" class="db-left">
-    <div fxFlex="80" fxLayout="row" fxLayoutAlign="center none">
-      <mat-list id="developer-list">
-        <h3>UNMAPPED DEVELOPERS</h3>
-        <mat-list-item *ngFor="let developer of unmappedDevelopers" id="deveoper-list-member">
-          <p>{{ developer.name | titlecase}}</p>
-        </mat-list-item>
-      </mat-list>
-    </div>
-
-  </div>
 
   <div fxFlex="12" fxLayout="column" class="db-left">
-    <div fxFlex="80" fxLayout="row" fxLayoutAlign="center none">
+    <div  fxLayout="row" fxLayoutAlign="center none">
       <mat-list id="developer-list">
-        <h3>ALL DEVELOPERS</h3>
+        <h3 fxLayoutAlign="center center">Developers</h3>
         <mat-list-item *ngFor="let developer of juniorDevelopers"
           (click)="getAssignedTasks(developer.id,developer.name)" id="deveoper-list-member"
           [class.selected]="isDeveloperMappedToManager(developer)" [class.devDelected]="developer.name === jrDevName">
@@ -43,13 +32,26 @@
     </div>
   </div>
 
-  <div fxFlex="64" class="a-db-right" fxLayout="column" *ngIf="managerName !==''&& displayTask===false">
-    <h3 *ngIf="developers.length>0"> {{ managerName | titlecase}}'s Team
-      <button mat-mini-fab color="warn" id="del-btn" (click)="openDeleteTeamDialog()">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </h3>
+  <div fxFlex="12" fxLayout="column" class="db-left">
+    <div  fxLayout="row" fxLayoutAlign="center none">
+      <mat-list id="developer-list">
+        <h3>Unmapped Developers</h3>
+        <mat-list-item *ngFor="let developer of unmappedDevelopers" id="deveoper-list-member">
+          <p>{{ developer.name | titlecase}}</p>
+        </mat-list-item>
+      </mat-list>
+    </div>
 
+  </div>
+
+
+  <div fxFlex="64" class="a-db-right" fxLayout="column" *ngIf="managerName !==''&& displayTask===false">
+    <div fxLayout="row" *ngIf="developers.length>0">
+      <h3> {{ managerName | titlecase}}'s Team </h3>
+      <mat-icon mat-button color="warn" id="del-btn" (click)="openDeleteTeamDialog()">
+        delete
+      </mat-icon>
+    </div>
     <div *ngIf="developers.length>0" fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="20px">
       <div fxFlex="75">
         <mat-card id="it-team">

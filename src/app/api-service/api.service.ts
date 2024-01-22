@@ -5,13 +5,12 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import { ManagerWithDevelopers } from 'src/app/modal/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'http://localhost:1102/api';
   private tokenKey = 'authToken';
 
   constructor(private http: HttpClient) {}
@@ -192,6 +191,21 @@ export class ApiService {
     const body = { developerId };
     return this.http.post<any>(`${this.apiUrl}/getTaskDuration`, body, {
       headers,
+    });
+  }
+
+  deleteUser(userId: number): Observable<any> {
+    const token = this.getToken();
+    if (!token) {
+      return throwError('Token not found');
+    }
+
+    const headers = new HttpHeaders({ Authorization: token });
+    const body = { userId };
+
+    return this.http.request<any>('delete', `${this.apiUrl}/deleteUser`, {
+      headers,
+      body,
     });
   }
 }

@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject, takeUntil } from 'rxjs';
 import { ApiService } from 'src/app/api-service/api.service';
 import { NotificationService } from 'src/app/auth/notification.service';
 import { DeleteDevModalComponent } from 'src/app/modal-dialog/delete-dev-modal/delete-dev-modal.component';
-import { DeleteModalComponent } from 'src/app/modal-dialog/delete-modal/delete-modal.component';
 import { TeamModalDialogComponent } from 'src/app/modal-dialog/team/team-modal-dialog/team-modal-dialog.component';
-import { User, ManagerWithDevelopers } from 'src/app/modal/user.model';
+import { User } from 'src/app/modal/user.model';
+import { Title } from '@angular/platform-browser';
+import { ConfirmModalComponent } from 'src/app/modal-dialog/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css'],
 })
-export class AdminDashboardComponent implements OnInit {
+export class AdminDashboardComponent implements OnInit, OnDestroy {
   managers: User[] = [];
   juniorDevelopers: User[] = [];
   teams: any[] = [];
@@ -25,11 +27,16 @@ export class AdminDashboardComponent implements OnInit {
   displayTask = false;
   jrDevName = '';
 
+  private unsubscribe$ = new Subject<void>();
+
   constructor(
+    private titleService: Title,
     public dialog: MatDialog,
     private apiService: ApiService,
     private notificationService: NotificationService
-  ) {}
+  ) {
+    this.titleService.setTitle('TMS - Admin Dashboard');
+  }
 
   ngOnInit(): void {
     this.fetchManagerData();
@@ -38,66 +45,81 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   fetchunmappedDevelopers() {
-    this.apiService.getUnmappedDevelopers().subscribe(
-      (data: any) => {
-        this.unmappedDevelopers = data;
-        console.log('unmappedDevelopers:', this.unmappedDevelopers);
-      },
-      (error) => {
-        console.error('Error fetching managers:', error);
-      }
-    );
+    this.apiService
+      .getUnmappedDevelopers()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => {
+          this.unmappedDevelopers = data;
+          console.log('unmappedDevelopers:', this.unmappedDevelopers);
+        },
+        (error) => {
+          console.error('Error fetching managers:', error);
+        }
+      );
   }
 
   fetchManagerData() {
-    this.apiService.getManagers().subscribe(
-      (data: any) => {
-        this.managers = data;
-        console.log('Manager:', this.managers);
-      },
-      (error) => {
-        console.error('Error fetching managers:', error);
-      }
-    );
+    this.apiService
+      .getManagers()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => {
+          this.managers = data;
+          console.log('Manager:', this.managers);
+        },
+        (error) => {
+          console.error('Error fetching managers:', error);
+        }
+      );
   }
 
   fetchJuniorDeveloperData() {
-    this.apiService.getJuniorDevelopers().subscribe(
-      (data: any) => {
-        this.juniorDevelopers = data;
-        console.log('juniorDevelopers:', this.juniorDevelopers);
-      },
-      (error) => {
-        console.error('Error fetching junior developers:', error);
-      }
-    );
+    this.apiService
+      .getJuniorDevelopers()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => {
+          this.juniorDevelopers = data;
+          console.log('juniorDevelopers:', this.juniorDevelopers);
+        },
+        (error) => {
+          console.error('Error fetching junior developers:', error);
+        }
+      );
   }
 
   getTeam(managerId: number) {
-    this.apiService.getDevelopersForManager(managerId).subscribe(
-      (data: any) => {
-        console.log('Response data:', data);
-        this.developers = data;
-        console.log('Developers mapped to the manager:', this.developers);
-      },
-      (error) => {
-        console.error('Error fetching developers for the manager:', error);
-      }
-    );
+    this.apiService
+      .getDevelopersForManager(managerId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => {
+          console.log('Response data:', data);
+          this.developers = data;
+          console.log('Developers mapped to the manager:', this.developers);
+        },
+        (error) => {
+          console.error('Error fetching developers for the manager:', error);
+        }
+      );
   }
 
   getAssignedTasks(developerId: number, jrDevName: string): void {
     this.jrDevName = jrDevName;
     this.displayTask = true;
-    this.apiService.getAssignedTasks(developerId).subscribe(
-      (data: any) => {
-        this.assignedTasks = data;
-        console.log('Assigned tasks:', this.assignedTasks);
-      },
-      (error) => {
-        console.error('Error fetching assigned tasks:', error);
-      }
-    );
+    this.apiService
+      .getAssignedTasks(developerId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => {
+          this.assignedTasks = data;
+          console.log('Assigned tasks:', this.assignedTasks);
+        },
+        (error) => {
+          console.error('Error fetching assigned tasks:', error);
+        }
+      );
   }
 
   selectedManager(manager: any) {
@@ -120,49 +142,61 @@ export class AdminDashboardComponent implements OnInit {
       },
     });
 
-    dialogRefTeam.afterClosed().subscribe((teamFormData) => {
-      if (teamFormData) {
-        const managerId = teamFormData.managerId;
-        const developerId = teamFormData.developerId;
-        console.log('managerId:', managerId, 'developerId:', developerId);
-        this.addTeam(managerId, developerId);
-      }
-    });
+    dialogRefTeam
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((teamFormData) => {
+        if (teamFormData) {
+          const managerId = teamFormData.managerId;
+          const developerId = teamFormData.developerId;
+          console.log('managerId:', managerId, 'developerId:', developerId);
+          this.addTeam(managerId, developerId);
+        }
+      });
   }
 
   addTeam(managerId: number, developerId: number) {
-    this.apiService.createTeam(managerId, developerId).subscribe(
-      (response) => {
-        console.log('Team created:', response);
-        this.notificationService.showNotification(
-          'Developer mapped successfully'
-        );
+    this.apiService
+      .createTeam(managerId, developerId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (response) => {
+          console.log('Team created:', response);
+          this.notificationService.showNotification(
+            'Developer mapped successfully'
+          );
 
-        this.fetchunmappedDevelopers();
-        this.fetchJuniorDeveloperData();
-        this.getTeam(managerId);
-      },
-      (error) => {
-        console.error('Error creating team:', error);
-        this.notificationService.showNotification('Error occurred, Try again!');
-      }
-    );
+          this.fetchunmappedDevelopers();
+          this.fetchJuniorDeveloperData();
+          this.getTeam(managerId);
+        },
+        (error) => {
+          console.error('Error creating team:', error);
+          this.notificationService.showNotification(
+            'Error occurred, Try again!'
+          );
+        }
+      );
   }
 
   openDeleteTeamDialog() {
-    const dialogRef = this.dialog.open(DeleteModalComponent, {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
       width: '300px',
+      data: { message: 'Are you sure to delete this Team?' },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.confirmed) {
-        const managerId = this.managerId;
-        const developerIds = this.developers.map((developer) => developer.id);
-        console.log('managerId:', managerId, 'developerIds:', developerIds);
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result && result.confirmed) {
+          const managerId = this.managerId;
+          const developerIds = this.developers.map((developer) => developer.id);
+          console.log('managerId:', managerId, 'developerIds:', developerIds);
 
-        this.deleteTeam(managerId,developerIds);
-      }
-    });
+          this.deleteTeam(managerId, developerIds);
+        }
+      });
   }
 
   deleteTeam(managerId: number, developerIds: number[]) {
@@ -171,6 +205,7 @@ export class AdminDashboardComponent implements OnInit {
         console.log('Team Deletion successful');
         this.developers = [];
         this.notificationService.showNotification('Team Deletion successful');
+        this.fetchunmappedDevelopers();
       },
       (error) => {
         console.error('Deletion error:', error);
@@ -187,32 +222,43 @@ export class AdminDashboardComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((delDevFormData) => {
-      if (delDevFormData) {
-        const developerId = delDevFormData.developerId;
-        console.log('deletionDevId:', developerId);
-        this.deleteDeveloper(developerId);
-      }
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((delDevFormData) => {
+        if (delDevFormData) {
+          const developerId = delDevFormData.developerId;
+          console.log('deletionDevId:', developerId);
+          this.deleteDeveloper(developerId);
+        }
+      });
   }
 
   deleteDeveloper(developerId: number) {
-    this.apiService.deleteDeveloperFromTeam(developerId).subscribe(
-      (response) => {
-        console.log('Developer deleted from the Team', response);
-        this.notificationService.showNotification(
-          'Developer deleted successfully!'
-        );
-        this.fetchunmappedDevelopers();
-        this.fetchJuniorDeveloperData();
-        this.getTeam(this.managerId);
-      },
-      (error) => {
-        console.log('Error deleting the developer from the team', error);
-        this.notificationService.showNotification(
-          'Error deleting the developer!'
-        );
-      }
-    );
+    this.apiService
+      .deleteDeveloperFromTeam(developerId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (response) => {
+          console.log('Developer deleted from the Team', response);
+          this.notificationService.showNotification(
+            'Developer deleted successfully!'
+          );
+          this.fetchunmappedDevelopers();
+          this.fetchJuniorDeveloperData();
+          this.getTeam(this.managerId);
+        },
+        (error) => {
+          console.log('Error deleting the developer from the team', error);
+          this.notificationService.showNotification(
+            'Error deleting the developer!'
+          );
+        }
+      );
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

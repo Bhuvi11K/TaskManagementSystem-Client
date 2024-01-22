@@ -80,8 +80,8 @@
   color: white !important;
 }
 
-.devDelected{
-  background-color: #FF6C22 !important;
+.devDelected {
+  background-color: #ff6c22 !important;
 }
 
 .devDelected p {
@@ -112,16 +112,15 @@
 }
 
 #del-btn {
-  height: 35px !important;
-  width: 35px !important;
-  background-color: white !important;
-  color: #F44336 !important;
-  margin-left: 8px;
+  color: hsl(4, 90%, 58%) !important;
+  margin: 40px 0px 30px 5px;
+  cursor: pointer;
 }
 
 #del-btn mat-icon {
   font-size: 20px !important;
 }
 
-
-
+#it-team button {
+  font-size: 12px !important;
+}

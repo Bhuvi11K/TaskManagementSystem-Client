@@ -18,13 +18,12 @@ import { ManagerDashboardComponent } from './manager/dashboard/manager-dashboard
 import { JrDevDashboardComponent } from './jr-developer/dashboard/jr-dev-dashboard/jr-dev-dashboard.component';
 import { ProfileComponent } from './common/profile/profile/profile.component';
 import { DashboardComponent } from './common/dashboard/dashboard/dashboard.component';
-import { LogoutComponent } from './modal-dialog/logout/logout/logout.component';
 import { TaskModalDialogComponent } from './modal-dialog/task/task-modal-dialog/task-modal-dialog.component';
 import { TeamModalDialogComponent } from './modal-dialog/team/team-modal-dialog/team-modal-dialog.component';
 import { DurationComponent } from './modal-dialog/duration/duration.component';
-import { DeleteModalComponent } from './modal-dialog/delete-modal/delete-modal.component';
 import { TaskEditModalComponent } from './modal-dialog/task/task-edit-modal/task-edit-modal.component';
 import { DeleteDevModalComponent } from './modal-dialog/delete-dev-modal/delete-dev-modal.component';
+import { ConfirmModalComponent } from './modal-dialog/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -40,13 +39,12 @@ import { DeleteDevModalComponent } from './modal-dialog/delete-dev-modal/delete-
     JrDevDashboardComponent,
     ProfileComponent,
     DashboardComponent,
-    LogoutComponent,
     TaskModalDialogComponent,
     TeamModalDialogComponent,
     DurationComponent,
-    DeleteModalComponent,
     TaskEditModalComponent,
     DeleteDevModalComponent,
+    ConfirmModalComponent,
   ],
   imports: [
     BrowserModule,

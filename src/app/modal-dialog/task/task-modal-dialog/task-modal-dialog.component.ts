@@ -1,9 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { ApiService } from 'src/app/api-service/api.service';
-import { NotificationService } from 'src/app/auth/notification.service';
+
 
 @Component({
   selector: 'app-task-modal-dialog',
@@ -20,8 +18,7 @@ export class TaskModalDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<TaskModalDialogComponent>,
-    private apiService: ApiService,
-    private notificationService: NotificationService
+    
   ) {
     this.developers = this.data.developers;
   }

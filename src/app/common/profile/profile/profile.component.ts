@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -9,7 +10,9 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class ProfileComponent implements OnInit {
   userData: any = {};
 
-  constructor(private authService: AuthService) {}
+  constructor(private titleService: Title, private authService: AuthService) {
+    this.titleService.setTitle('TMS - Profile');
+  }
 
   ngOnInit(): void {
     this.getUserData();

@@ -5,6 +5,7 @@ import { Subject } from 'rxjs/internal/Subject';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { NotificationService } from '../notification.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,11 +18,14 @@ export class SignUpComponent implements OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   constructor(
+    private titleService: Title,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private notificationService: NotificationService,
     private router: Router
-  ) {}
+  ) {
+    this.titleService.setTitle('TMS - Signup');
+  }
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
@@ -35,7 +39,7 @@ export class SignUpComponent implements OnDestroy {
   onSubmit() {
     if (this.signupForm.valid) {
       const userData = this.signupForm.value;
-      this.isLoading=true;
+      this.isLoading = true;
 
       this.authService
         .signUp(userData)
@@ -44,16 +48,17 @@ export class SignUpComponent implements OnDestroy {
           (response) => {
             this.signupForm.reset();
             console.log('User registered successfully', response);
-            this.isLoading=false;
-            this.notificationService.showNotification('User registered successfully');
+            this.isLoading = false;
+            this.notificationService.showNotification(
+              'User registered successfully'
+            );
             this.router.navigate(['/signin']);
-           
           },
           (error) => {
             this.signupForm.reset();
             console.error('Error registering user', error);
-            this.isLoading=false;
-            this.notificationService.showNotification('Error registering user. Please try again.');
+            this.isLoading = false;
+            this.notificationService.showNotification(error);
           }
         );
     }

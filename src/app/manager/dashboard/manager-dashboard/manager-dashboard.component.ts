@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject, takeUntil } from 'rxjs';
 import { ApiService } from 'src/app/api-service/api.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { NotificationService } from 'src/app/auth/notification.service';
-import { DeleteModalComponent } from 'src/app/modal-dialog/delete-modal/delete-modal.component';
+import { ConfirmModalComponent } from 'src/app/modal-dialog/confirm-modal/confirm-modal.component';
 import { TaskEditModalComponent } from 'src/app/modal-dialog/task/task-edit-modal/task-edit-modal.component';
 import { TaskModalDialogComponent } from 'src/app/modal-dialog/task/task-modal-dialog/task-modal-dialog.component';
-import { TaskEditData } from 'src/app/modal/user.model';
 
 @Component({
   selector: 'app-manager-dashboard',
   templateUrl: './manager-dashboard.component.html',
   styleUrls: ['./manager-dashboard.component.css'],
 })
-export class ManagerDashboardComponent implements OnInit {
+export class ManagerDashboardComponent implements OnInit, OnDestroy {
   userData: any = {};
   developers: any[] = [];
   assignedTasks: any[] = [];
@@ -22,6 +22,8 @@ export class ManagerDashboardComponent implements OnInit {
   developerId!: number;
   developerName = '';
   developer: any;
+
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     public dialog: MatDialog,
@@ -54,31 +56,37 @@ export class ManagerDashboardComponent implements OnInit {
     const managerId = this.userData.id;
     // console.log('Manager ID:', managerId);
 
-    this.apiService.getDevelopersForManager(managerId).subscribe(
-      (data: any) => {
-        // console.log('Response data:', data);
-        this.developers = data;
-        // console.log('Developers mapped to the manager:', this.developers);
-      },
-      (error) => {
-        console.error('Error fetching developers for the manager:', error);
-      }
-    );
+    this.apiService
+      .getDevelopersForManager(managerId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => {
+          // console.log('Response data:', data);
+          this.developers = data;
+          // console.log('Developers mapped to the manager:', this.developers);
+        },
+        (error) => {
+          console.error('Error fetching developers for the manager:', error);
+        }
+      );
   }
 
   getAssignedTasks(developerId: number): void {
     this.devSelected = true;
     this.developerId = developerId;
 
-    this.apiService.getAssignedTasks(developerId).subscribe(
-      (data: any) => {
-        this.assignedTasks = data;
-        console.log('Assigned tasks:', this.assignedTasks);
-      },
-      (error) => {
-        console.error('Error fetching assigned tasks:', error);
-      }
-    );
+    this.apiService
+      .getAssignedTasks(developerId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => {
+          this.assignedTasks = data;
+          console.log('Assigned tasks:', this.assignedTasks);
+        },
+        (error) => {
+          console.error('Error fetching assigned tasks:', error);
+        }
+      );
     this.getTaskDuration();
   }
 
@@ -89,31 +97,39 @@ export class ManagerDashboardComponent implements OnInit {
         developers: this.developers,
       },
     });
-    dialogRefTask.afterClosed().subscribe((taskForm) => {
-      if (taskForm) {
-        const developerId = taskForm.developer;
-        const task = taskForm.task;
-        console.log('developerId:', developerId, 'task:', task);
-        this.addTask(developerId, task);
-      }
-    });
+    dialogRefTask
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((taskForm) => {
+        if (taskForm) {
+          const developerId = taskForm.developer;
+          const task = taskForm.task;
+          console.log('developerId:', developerId, 'task:', task);
+          this.addTask(developerId, task);
+        }
+      });
   }
 
   addTask(developerId: number, task: string) {
-    this.apiService.createTask(developerId, task).subscribe(
-      (data: any) => {
-        console.log('Task created successfully:', data);
-        this.notificationService.showNotification('Task created successfully');
-        this.getAssignedTasks(developerId);
-        this.getTaskDuration();
-      },
-      (error) => {
-        console.error('Error creating task:', error);
-        this.notificationService.showNotification(
-          'Error creating task, Try again !'
-        );
-      }
-    );
+    this.apiService
+      .createTask(developerId, task)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => {
+          console.log('Task created successfully:', data);
+          this.notificationService.showNotification(
+            'Task created successfully'
+          );
+          this.getAssignedTasks(developerId);
+          this.getTaskDuration();
+        },
+        (error) => {
+          console.error('Error creating task:', error);
+          this.notificationService.showNotification(
+            'Error creating task, Try again !'
+          );
+        }
+      );
   }
 
   openEditDialog(task: any) {
@@ -121,48 +137,59 @@ export class ManagerDashboardComponent implements OnInit {
       width: '300px',
       data: { task },
     });
-    dialogRefTask.afterClosed().subscribe((updatedTask: any) => {
-      if (updatedTask) {
-        const { developerId, taskId, task } = updatedTask;
-        console.log(
-          'taskId:',
-          taskId,
-          'developerId:',
-          developerId,
-          'task:',
-          task
-        );
-        this.updateTask(taskId, developerId, task);
-      }
-    });
+    dialogRefTask
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((updatedTask: any) => {
+        if (updatedTask) {
+          const { developerId, taskId, task } = updatedTask;
+          console.log(
+            'taskId:',
+            taskId,
+            'developerId:',
+            developerId,
+            'task:',
+            task
+          );
+          this.updateTask(taskId, developerId, task);
+        }
+      });
   }
 
   updateTask(taskId: number, developerId: number, task: string) {
-    this.apiService.updateTask(taskId, developerId, task).subscribe(
-      (data: any) => {
-        console.log('Task Updated Successfully', data);
-        this.notificationService.showNotification('Task Updated Successfully!');
-        this.getAssignedTasks(developerId);
-      },
-      (error) => {
-        console.log('Task Updation Failure!', error);
-        this.notificationService.showNotification('Task Updated Failure!');
-      }
-    );
+    this.apiService
+      .updateTask(taskId, developerId, task)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => {
+          console.log('Task Updated Successfully', data);
+          this.notificationService.showNotification(
+            'Task Updated Successfully!'
+          );
+          this.getAssignedTasks(developerId);
+        },
+        (error) => {
+          console.log('Task Updation Failure!', error);
+          this.notificationService.showNotification('Task Updated Failure!');
+        }
+      );
   }
 
   getTaskDuration() {
     const developerId = this.developerId;
 
-    this.apiService.getTaskDuration(developerId).subscribe(
-      (data: any) => {
-        this.taskDuration = data;
-        console.log('Task duration:', this.taskDuration);
-      },
-      (error) => {
-        console.error('Error fetching task duration:', error);
-      }
-    );
+    this.apiService
+      .getTaskDuration(developerId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => {
+          this.taskDuration = data;
+          console.log('Task duration:', this.taskDuration);
+        },
+        (error) => {
+          console.error('Error fetching task duration:', error);
+        }
+      );
   }
 
   hasDuration(taskId: number): boolean {
@@ -177,31 +204,42 @@ export class ManagerDashboardComponent implements OnInit {
   }
 
   openDeleteDialog(task: any) {
-    const dialogRef = this.dialog.open(DeleteModalComponent, {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
       width: '300px',
-      // data: { taskId: task.id },
+      data: { message: 'Are you sure to delete this Task?' },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.confirmed) {
-        // const taskId = result.taskId;
-        const taskId = task.id;
-        this.deleteTask(taskId);
-      }
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((result) => {
+        if (result && result.confirmed) {
+          // const taskId = result.taskId;
+          const taskId = task.id;
+          this.deleteTask(taskId);
+        }
+      });
   }
   deleteTask(taskId: number) {
-    this.apiService.deleteTask(taskId).subscribe(
-      () => {
-        console.log('Task Deletion successful');
-        this.notificationService.showNotification('Task Deletion successful');
-        this.getAssignedTasks(this.developerId);
-        this.getTaskDuration();
-      },
-      (error) => {
-        console.error('Deletion error:', error);
-        this.notificationService.showNotification('Task Deletion Failure');
-      }
-    );
+    this.apiService
+      .deleteTask(taskId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        () => {
+          console.log('Task Deletion successful');
+          this.notificationService.showNotification('Task Deletion successful');
+          this.getAssignedTasks(this.developerId);
+          this.getTaskDuration();
+        },
+        (error) => {
+          console.error('Deletion error:', error);
+          this.notificationService.showNotification('Task Deletion Failure');
+        }
+      );
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
