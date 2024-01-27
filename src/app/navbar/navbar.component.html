@@ -4,7 +4,7 @@
     <h4 style="margin:10px 0px 0px 10px;font-size: 16px;">Task Management System</h4>
   </div>
   <div *ngIf="authService.isLoggedIn">
-    <button  mat-button routerLink="/users" *ngIf="userRole === 'Admin'">Users</button>
+    <button mat-button routerLink="/users" *ngIf="showUser">Users</button>
     <button mat-button routerLink="/dashboard">Dashboard</button>
     <button mat-button routerLink="/profile">Profile</button>
     <button mat-button (click)="openLogoutDialog()">Logout</button>
@@ -13,5 +13,10 @@
   <div *ngIf="!authService.isLoggedIn">
     <button mat-button routerLink="/signin">Sign in</button>
     <button mat-button routerLink="/signup">Sign up</button>
+  </div>
+  <div fxHide.gt-sm>
+    <button mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
   </div>
 </mat-toolbar>

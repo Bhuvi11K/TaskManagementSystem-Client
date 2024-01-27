@@ -104,15 +104,23 @@ export class ManagerDashboardComponent implements OnInit, OnDestroy {
         if (taskForm) {
           const developerId = taskForm.developer;
           const task = taskForm.task;
-          console.log('developerId:', developerId, 'task:', task);
-          this.addTask(developerId, task);
+          const managerId = this.userData.id;
+          console.log(
+            'developerId:',
+            developerId,
+            'task:',
+            task,
+            'managerId:',
+            managerId
+          );
+          this.addTask(developerId, task, managerId);
         }
       });
   }
 
-  addTask(developerId: number, task: string) {
+  addTask(developerId: number, task: string, managerId: number) {
     this.apiService
-      .createTask(developerId, task)
+      .createTask(developerId, task, managerId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (data: any) => {
@@ -170,7 +178,7 @@ export class ManagerDashboardComponent implements OnInit, OnDestroy {
         },
         (error) => {
           console.log('Task Updation Failure!', error);
-          this.notificationService.showNotification('Task Updated Failure!');
+          this.notificationService.showNotification('Task Updation Failure!');
         }
       );
   }

@@ -30,7 +30,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     private apiService: ApiService,
     private notificationService: NotificationService
   ) {
-    this.titleService.setTitle('TMS - Admin Dashboard');
+    this.titleService.setTitle('TMS - Users');
   }
 
   ngOnInit(): void {
@@ -79,8 +79,11 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   openConfirmModal() {
     const dialogRef = this.dialog.open(ConfirmModalComponent, {
-      width: '300px',
-      data: { message: 'Are you sure to delete this User?' },
+      width: '350px',
+      data: {
+        message: `Are you sure to delete this User? 
+                        It will delete all the corresponding data.`,
+      },
     });
 
     dialogRef
@@ -94,7 +97,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
   deleteUser(userId: number) {
     this.apiService
-      .deleteTask(userId)
+      .deleteUser(userId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         () => {
@@ -102,6 +105,10 @@ export class AdminComponent implements OnInit, OnDestroy {
           this.notificationService.showNotification('User Deletion successful');
           this.fetchManagerData();
           this.fetchJuniorDeveloperData();
+          this.userName = '';
+          this.userRole = '';
+          this.userEmail = '';
+          this.showProfile = false;
         },
         (error) => {
           console.error('Deletion error:', error);

@@ -1,10 +1,10 @@
-<mat-card class="profile" fxLayout="row">
+<mat-card class="profile"  fxLayout.lt-md="column" fxLayout.gt-md="row">
 
-    <div fxFlex="50%" fxLayout="row" fxLayoutAlign="center center">
+    <div fxHide.lt-md fxFlex.gt-md="50%" fxLayoutAlign="center center">
         <img src="./assets/profile.jpg" alt="Profile" style="height: 450px;">
     </div>
 
-    <div fxFlex="50%" class="user">
+    <div fxFlex.lt-md="100%" fxFlex.gt-md="50%" class="user">
         <div class="user-profile">
             <mat-card class="user-profile-data">
                 <mat-card-header>
@@ -12,19 +12,20 @@
                         <h3>Welcome {{ userData.name }}!</h3>
                     </mat-toolbar>
                 </mat-card-header>
-                <mat-card-content fxLayout="row" id="usd">
-                    <div fxFlex="50" fxLayoutAlign="center center" fxLayout="column">
+                <mat-card-content fxLayout.lt-md="column" fxLayout.gt-md="row" id="usd">
+                    <div fxFlex.lt-md="100%" fxFlex.gt-md="50%" fxLayoutAlign="center center" fxLayout="column">
                         <div>
                             <img src="./assets/user.jpg" alt="user" style="height: 150px;border-radius: 50%;"
                                 fxLayoutAlign="center center">
                         </div>
                         <div>
-                            <button mat-raised-button color="primary" fxLayoutAlign="center center" style="margin-top: 10px;">
+                            <button mat-raised-button color="primary" fxLayoutAlign="center center" style="margin-top: 10px;"
+                            (click)="openProfileEditDialog()">
                                 Edit Profile
                             </button>
                         </div>
                     </div>
-                    <div fxFlex="50" fxLayoutAlign="start center">
+                    <div fxFlex.lt-md="100%" fxFlex.gt-md="50%" fxLayoutAlign.gt-md="start center" fxLayoutAlign.lt-md="center center">
                         <mat-list>
                             <mat-list-item>
                                 <span matListItemTitle>Name</span>

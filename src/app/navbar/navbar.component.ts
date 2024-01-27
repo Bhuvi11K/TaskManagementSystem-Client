@@ -12,17 +12,17 @@ import { ConfirmModalComponent } from '../modal-dialog/confirm-modal/confirm-mod
 })
 export class NavbarComponent implements OnInit {
   private unsubscribe$ = new Subject<void>();
-  userRole: string = '';
+  showUser: boolean = false;
 
   constructor(
     public dialog: MatDialog,
     public authService: AuthService,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.fetchUserRole();
   }
-
-  ngOnInit(): void {}
 
   fetchUserRole(): void {
     const userDataString = localStorage.getItem('userData');
@@ -30,12 +30,13 @@ export class NavbarComponent implements OnInit {
     if (userDataString !== null) {
       const userData = JSON.parse(userDataString);
       if (userData && userData.role) {
-        this.userRole = userData.role;
+        const userRole = userData.role;
+        this.showUser = userRole === 'Admin';
       } else {
-        this.userRole = '';
+        this.showUser = false;
       }
     } else {
-      this.userRole = '';
+      this.showUser = false;
     }
   }
 
@@ -52,7 +53,7 @@ export class NavbarComponent implements OnInit {
         if (result && result.confirmed) {
           this.authService.logout();
           this.router.navigate(['/signin']);
-          this.userRole = '';
+          this.showUser = false;
         }
       });
   }

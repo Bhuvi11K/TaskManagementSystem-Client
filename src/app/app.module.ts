@@ -24,6 +24,7 @@ import { DurationComponent } from './modal-dialog/duration/duration.component';
 import { TaskEditModalComponent } from './modal-dialog/task/task-edit-modal/task-edit-modal.component';
 import { DeleteDevModalComponent } from './modal-dialog/delete-dev-modal/delete-dev-modal.component';
 import { ConfirmModalComponent } from './modal-dialog/confirm-modal/confirm-modal.component';
+import { ProfileEditModalComponent } from './modal-dialog/profile-edit-modal/profile-edit-modal.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ConfirmModalComponent } from './modal-dialog/confirm-modal/confirm-moda
     TaskEditModalComponent,
     DeleteDevModalComponent,
     ConfirmModalComponent,
+    ProfileEditModalComponent,
   ],
   imports: [
     BrowserModule,

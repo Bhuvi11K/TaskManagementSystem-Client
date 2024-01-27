@@ -20,7 +20,7 @@
 
 
   <div fxFlex="12" fxLayout="column" class="db-left">
-    <div  fxLayout="row" fxLayoutAlign="center none">
+    <div fxLayout="row" fxLayoutAlign="center none">
       <mat-list id="developer-list">
         <h3 fxLayoutAlign="center center">Developers</h3>
         <mat-list-item *ngFor="let developer of juniorDevelopers"
@@ -33,7 +33,7 @@
   </div>
 
   <div fxFlex="12" fxLayout="column" class="db-left">
-    <div  fxLayout="row" fxLayoutAlign="center none">
+    <div fxLayout="row" fxLayoutAlign="center none">
       <mat-list id="developer-list">
         <h3>Unmapped Developers</h3>
         <mat-list-item *ngFor="let developer of unmappedDevelopers" id="deveoper-list-member">
@@ -94,8 +94,14 @@
 
   </div>
 
-  <div fxFlex="70" fxLayoutAlign="center center" fxLayout="column" *ngIf="managerName==='' && displayTask===false">
-    <img src="./assets/profile.jpg" alt="Profile" style="height: 450px;">
+  <div fxFlex="64" *ngIf="managerName==='' && displayTask===false">
+
+    <div fxFlex="85" fxLayoutAlign="center center">
+      <img src="./assets/profile.jpg" alt="Profile" style="height: 450px;">
+    </div>
+    <div fxFlex="15" style="margin: 20px 5px 0px 0px;">
+      <button mat-raised-button color="primary" routerLink="/users">Users</button>
+    </div>
   </div>
 
   <div fxFlex="64" class="a-db-right" fxLayout="column" *ngIf=" displayTask===true">

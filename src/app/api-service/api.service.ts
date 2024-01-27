@@ -116,13 +116,17 @@ export class ApiService {
     });
   }
 
-  createTask(developerId: number, task: string): Observable<any> {
+  createTask(
+    developerId: number,
+    task: string,
+    managerId: number
+  ): Observable<any> {
     const token = this.getToken();
     if (!token) {
       return throwError('Token not found');
     }
     const headers = new HttpHeaders({ Authorization: token });
-    const body = { developer: developerId, task };
+    const body = { developerId, task, managerId };
     return this.http.post<any>(`${this.apiUrl}/insertTask`, body, { headers });
   }
 
@@ -190,6 +194,19 @@ export class ApiService {
     const headers = new HttpHeaders({ Authorization: token });
     const body = { developerId };
     return this.http.post<any>(`${this.apiUrl}/getTaskDuration`, body, {
+      headers,
+    });
+  }
+
+  updateProfile(userId: number, userName: string): Observable<any> {
+    const token = this.getToken();
+    if (!token) {
+      return throwError('Token not found');
+    }
+    const headers = new HttpHeaders({ Authorization: token });
+    const body = { userId, userName };
+    console.log('Request Payload:', body);
+    return this.http.put<any>(`${this.apiUrl}/updateUserProfile`, body, {
       headers,
     });
   }

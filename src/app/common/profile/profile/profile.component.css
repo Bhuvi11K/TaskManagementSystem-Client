@@ -9,10 +9,12 @@
 }
 
 #br-10{
-    border-radius: 15px;
+    border-radius: 5px;
     color: #3f51b5;
-    text-align: center;
+    justify-content: center;
 }
+
+
 
 #usd{
     height: 400px;

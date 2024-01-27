@@ -14,7 +14,6 @@ export class DurationComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<DurationComponent>,
-    private apiService: ApiService,
     private formBuilder: FormBuilder
   ) {}
 
