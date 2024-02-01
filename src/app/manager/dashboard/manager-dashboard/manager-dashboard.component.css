@@ -140,9 +140,24 @@
   color: #3f51b5 !important;
 }
 
+.no-devs img ,.no-task img{
+  height: 350px;
+  border-radius: 8px;
+}
+
+.no-devs p,.no-task p {
+  background-color: #3f51b5 !important;
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+  padding: 12px;
+}
+
+
+
 @media (max-width: 900px) {
   .manager-dashboard {
-    height: 844px;
+    height: 860px;
     margin: 0px;
     box-shadow: none;
   }
@@ -199,5 +214,19 @@
   #team-member p {
     font-size: 14px;
     font-weight: 400;
+  }
+
+  .no-devs img,  .no-task img {
+    height: 280px;
+    margin-top: 30px;
+  }
+
+  .no-devs,.no-task {
+    text-align: center;
+  }
+
+  .no-devs p,.no-task p {
+    padding: 14px;
+    font-size: 14px;
   }
 }

@@ -1,15 +1,16 @@
-<mat-card class="manager-dashboard" fxLayout.lt-md="column" fxLayout="row">
+<mat-card class="manager-dashboard" fxLayout.lt-md="column" fxLayout="row" *ngIf="developers.length>0">
 
   <div fxFlex="30" fxFlex.lt-md="100%">
     <div fxLayout="row" class="members-container">
-      <mat-list id="developer-list">
+      <mat-list id="developer-list" >
         <h3> YOUR TEAM</h3>
         <mat-list-item id="deveoper-list-member" *ngFor="let developer of developers"
           [class.selected]="developer.name === developerName" (click)="selectedDeveloper(developer)"
           (click)="getAssignedTasks(developer.id)">
           <p>{{developer.name | titlecase}}</p>
         </mat-list-item>
-      </mat-list>
+      </mat-list >
+     
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center">
@@ -58,13 +59,29 @@
     </div>
   </div>
 
-  <div fxFlex="70" class="m-db-right" fxLayoutAlign="center center"
-    *ngIf="assignedTasks.length === 0 && devSelected===true">
-    <img src="./assets/noTask.jpeg" alt="No task assigned" id="no-task-img">
+  <div fxFlex="70"  class="m-db-right" fxLayoutAlign="center center" 
+  *ngIf="assignedTasks.length === 0 && devSelected===true">
+    <mat-card-content class="no-task">
+      <img src="./assets/noTask.jpeg">
+      <mat-list-item>
+        <p> No Task Assigned for {{developerName | titlecase }}</p>
+      </mat-list-item>
+    </mat-card-content>
   </div>
 
   <div fxFlex="70" class="m-db-right" fxLayoutAlign="center center" *ngIf=" devSelected===false">
     <img src="./assets/team.jpg" alt="Team" id="dashboard-img">
   </div>
 
+</mat-card>
+
+<mat-card class="manager-dashboard" fxLayout.lt-md="column" fxLayout="row" *ngIf="developers.length===0">
+  <div  fxFlex="100" fxLayoutAlign="center center">
+    <mat-card-content class="no-devs">
+      <img src="./assets/Team with Leader.jpg">
+      <mat-list-item>
+        <p> There are no developers in your team.</p>
+      </mat-list-item>
+    </mat-card-content>
+  </div>
 </mat-card>

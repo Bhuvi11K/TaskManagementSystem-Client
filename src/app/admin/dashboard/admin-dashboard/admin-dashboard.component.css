@@ -169,12 +169,12 @@ td {
   text-align: center;
 }
 
-.no-devs img {
+.no-devs img ,.no-task img{
   height: 380px;
   border-radius: 8px;
 }
 
-.no-devs p {
+.no-devs p,.no-task p {
   background-color: #3f51b5 !important;
   color: white;
   border-radius: 8px;
@@ -184,7 +184,7 @@ td {
 
 @media (max-width: 900px) {
   .admin-dashboard {
-    height: 770px;
+    height: 860px;
     margin: 0px;
     box-shadow: none;
   }
@@ -233,16 +233,16 @@ td {
     margin: 10px;
   }
 
-  .no-devs img {
+  .no-devs img,  .no-task img {
     height: 280px;
     margin-top: 30px;
   }
 
-  .no-devs {
+  .no-devs,.no-task {
     text-align: center;
   }
 
-  .no-devs p {
+  .no-devs p,.no-task p {
     padding: 14px;
     font-size: 14px;
   }

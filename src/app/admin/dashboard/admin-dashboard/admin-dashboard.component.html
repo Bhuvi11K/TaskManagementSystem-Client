@@ -5,7 +5,7 @@
     <div fxLayout="row" class="members-container">
 
       <div fxFlex="33" fxLayout="column" class="db-left">
-        <mat-list id="manager-list">
+        <mat-list id="manager-list" *ngIf="managers.length>0">
           <h3 fxLayoutAlign="center center"> Managers</h3>
           <mat-list-item *ngFor="let manager of managers" id="manager-list-member"
             [class.selected]="manager.name === managerName" (click)="getTeam(manager.id)"
@@ -15,7 +15,7 @@
         </mat-list>
       </div>
 
-      <div fxFlex="33" fxLayout="column" class="db-left">
+      <div fxFlex="33" fxLayout="column" class="db-left" *ngIf="juniorDevelopers.length>0">
         <mat-list id="developer-list">
           <h3 fxLayoutAlign="center center">Developers</h3>
           <mat-list-item *ngFor="let developer of juniorDevelopers"
@@ -26,15 +26,14 @@
         </mat-list>
       </div>
 
-      <div fxFlex="33" fxLayout="column" class="db-left">
+      <div fxFlex="33" fxLayout="column" class="db-left" *ngIf="unmappedDevelopers.length>0">
         <mat-list id="um-developer-list">
           <h3>Unmapped Developers</h3>
           <mat-list-item *ngFor="let developer of unmappedDevelopers" id="um-developer-list-member">
-            <p>{{ developer.name | titlecase}}</p>
+            <p *ngIf="unmappedDevelopers.length>0">{{ developer.name | titlecase}}</p>
           </mat-list-item>
         </mat-list>
       </div>
-
     </div>
 
     <div fxLayout="row">
@@ -133,7 +132,7 @@
   </div>
 
   <div fxFlex.lt-md="100%" fxFlex="64" class="a-db-right" fxLayout="column" *ngIf=" displayTask===true">
-    
+
     <div class="m-db-right" *ngIf="assignedTasks.length > 0">
       <h3>ASSIGNED TASKS</h3>
       <div *ngFor="let task of assignedTasks" fxLayoutAlign="center center" fxLayout="column">
@@ -143,8 +142,13 @@
       </div>
     </div>
 
-    <div class="m-db-right" fxLayoutAlign="center center" *ngIf="assignedTasks.length === 0">
-      <img src="./assets/noTask.jpeg" alt="no task assigned" id="no-task-img">
+    <div  fxLayoutAlign="center center" *ngIf="assignedTasks.length === 0">
+      <mat-card-content class="no-task">
+        <img src="./assets/noTask.jpeg">
+        <mat-list-item>
+          <p> No Task Assigned for {{jrDevName | titlecase }}</p>
+        </mat-list-item>
+      </mat-card-content>
     </div>
 
   </div>

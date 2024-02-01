@@ -38,10 +38,16 @@
 
 </mat-card>
 
-<mat-card class="dev-dashboard" fxLayout="row" *ngIf="assignedTasks.length === 0">
+<mat-card class="dev-dashboard" fxLayout.lt-md="column" fxLayout="row" *ngIf="assignedTasks.length === 0">
 
-  <div fxFlex="100%" fxLayout="row" fxLayoutAlign="center center">
-    <img src="./assets/noTask.jpeg" alt="No task assigned" id="no-task-img">
+  <div fxFlex="100%"  fxLayoutAlign="center center">
+    <mat-card-content class="no-task">
+      <img src="/assets/noTask.jpeg" alt="No task assigned">
+      <mat-list-item>
+        <p> No task has been assigned to you</p>
+      </mat-list-item>
+    </mat-card-content>
+  
   </div>
 
 </mat-card>

@@ -64,6 +64,19 @@
   color: #3f51b5 !important;
 }
 
+.no-task img {
+  height: 350px;
+  border-radius: 8px;
+}
+
+.no-task p {
+  background-color: #3f51b5 !important;
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+  padding: 12px;
+}
+
 @media (max-width: 900px) {
   #dev-dash-img {
     height: 300px;
@@ -102,5 +115,19 @@
   #task-btn {
     height: 30px;
     width: 30px;
+  }
+
+  .no-task img {
+    height: 280px;
+    margin-top: 30px;
+  }
+
+  .no-task {
+    text-align: center;
+  }
+
+  .no-task p {
+    padding: 14px;
+    font-size: 14px;
   }
 }
