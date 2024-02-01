@@ -9,12 +9,16 @@ import { User } from 'src/app/modal/user.model';
 import { Title } from '@angular/platform-browser';
 import { ConfirmModalComponent } from 'src/app/modal-dialog/confirm-modal/confirm-modal.component';
 
+
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css'],
 })
 export class AdminDashboardComponent implements OnInit, OnDestroy {
+
+  displayedColumns = ['position', 'name','role', 'email', 'action'];
+
   managers: User[] = [];
   juniorDevelopers: User[] = [];
   teams: any[] = [];
@@ -148,8 +152,18 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       .subscribe((teamFormData) => {
         if (teamFormData) {
           const managerId = teamFormData.managerId;
+          const managerName = teamFormData.managerName;
+          this.managerName = managerName;
           const developerId = teamFormData.developerId;
-          console.log('managerId:', managerId, 'developerId:', developerId);
+          // console.log(
+          //   'managerId:',
+          //   managerId,
+          //   managerId,
+          //   'managerName',
+          //   managerName,
+          //   'developerId:',
+          //   developerId
+          // );
           this.addTeam(managerId, developerId);
         }
       });
@@ -214,20 +228,20 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     );
   }
 
-  openDeleteDevDialog() {
-    const dialogRef = this.dialog.open(DeleteDevModalComponent, {
+  openDeleteDevDialog(devId: number) {
+    const developerId = devId;
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
       width: '300px',
       data: {
-        developers: this.developers,
+        message: 'Are you sure you want to delete this developer?',
       },
     });
 
     dialogRef
       .afterClosed()
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((delDevFormData) => {
-        if (delDevFormData) {
-          const developerId = delDevFormData.developerId;
+      .subscribe((result) => {
+        if (result && result.confirmed) {
           console.log('deletionDevId:', developerId);
           this.deleteDeveloper(developerId);
         }

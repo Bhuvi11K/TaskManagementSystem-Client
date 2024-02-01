@@ -24,6 +24,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 
 
+
+
 @NgModule({
   declarations: [],
   imports: [
@@ -74,6 +76,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatSidenavModule,
     MatListModule,
     MatDividerModule,
+    MatTableModule
   ],
 })
 export class MaterialModule {}

@@ -1,7 +1,7 @@
-<mat-card class="admin-dashboard" fxLayout="row">
+<mat-card class="admin-dashboard" fxLayout.lt-md="column" fxLayout="row">
 
-    <div fxFlex="50">
-        <div fxFlex="20" fxLayout="column" class="db-left">
+    <div fxFlex="30" fxFlex.lt-md="100%"  class="db-left">
+        <div fxFlex="50" fxLayout="column">
             <div fxLayoutAlign="center none">
                 <mat-list id="manager-list">
                     <h3 fxLayoutAlign="center center"> Managers</h3>
@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div fxFlex="20" fxLayout="column" class="db-left">
+        <div fxFlex="50" fxLayout="column" >
             <div>
                 <mat-list id="manager-list">
                     <h3 fxLayoutAlign="center center"> Developers</h3>
@@ -26,8 +26,8 @@
         </div>
     </div>
 
-    <div fxFlex="50" class="user">
-        <div class="user-profile">
+    <div fxFlex="70" fxFlex.lt-md="100%" class="user">
+        <div class="user-profile" fxLayoutAlign="center center">
             <mat-card class="user-profile-data" *ngIf="showProfile">
                 <mat-card-header>
                     <mat-toolbar id="br-10">
@@ -35,10 +35,9 @@
                     </mat-toolbar>
                 </mat-card-header>
                 <mat-card-content fxLayout="row" id="usd">
-                    <div fxFlex="50" fxLayoutAlign="center center" fxLayout="column">
+                    <div fxFlex.lt-md="40" fxFlex="50" fxLayoutAlign="center center" fxLayout="column">
                         <div>
-                            <img src="./assets/user.jpg" alt="user" style="height: 150px;border-radius: 50%;"
-                                fxLayoutAlign="center center">
+                            <img src="./assets/user.jpg" alt="user" id="user-img" fxLayoutAlign="center center">
                         </div>
                         <div>
                             <button mat-raised-button color="warn" fxLayoutAlign="center center"
@@ -47,17 +46,17 @@
                             </button>
                         </div>
                     </div>
-                    <div fxFlex="50" fxLayoutAlign="start center">
+                    <div fxFlex.lt-md="60" fxFlex="50" fxLayoutAlign="start center">
                         <mat-list>
-                            <mat-list-item>
+                            <mat-list-item id="user-data">
                                 <span matListItemTitle>Name</span>
                                 <span matListItemLine>{{userName | titlecase}}</span>
                             </mat-list-item>
-                            <mat-list-item>
+                            <mat-list-item id="user-data">
                                 <span matListItemTitle>Role</span>
                                 <span matListItemLine>{{userRole | titlecase}}</span>
                             </mat-list-item>
-                            <mat-list-item>
+                            <mat-list-item id="user-data">
                                 <span matListItemTitle>Email</span>
                                 <span matListItemLine>{{userEmail}}</span>
                             </mat-list-item>
@@ -65,9 +64,9 @@
                     </div>
                 </mat-card-content>
             </mat-card>
-            <mat-card class="user-profile-data" *ngIf="!showProfile" fxLayoutAlign="center center">
-                <img src="./assets/profile.jpg" alt="Profile" style="height: 100%;width:70%">
-            </mat-card>
+            <div class="user-profile-data" *ngIf="!showProfile" fxLayoutAlign="center center">
+                <img src="./assets/team2.jpg" alt="Team" id="dash-img">
+            </div>
         </div>
 
     </div>

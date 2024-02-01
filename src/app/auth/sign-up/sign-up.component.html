@@ -1,10 +1,10 @@
-<mat-card class="sign-up" fxLayout="row">
+<mat-card class="sign-up" fxLayout.lt-md="column" fxLayout="row">
 
-    <div fxFlex="50%" fxLayout="row" fxLayoutAlign="center center">
-        <img src="./assets/sign-up.jpg" alt="Sign in" style="height: 450px;">
+    <div id="signup" fxHide.lt-md fxFlex.lt-md="100%" fxFlex="50%" fxLayout.lt-md="column" fxLayout="row" fxLayoutAlign="center center">
+        <img src="./assets/sign-up.jpg" alt="Sign up">
     </div>
 
-    <div fxFlex="50%" class="sign-up-form">
+    <div fxFlex.lt-md="100%" fxFlex="50%" class="sign-up-form">
         <div>
             <mat-card *ngIf="isLoading" fxLayoutAlign="center center" class="loader">
                 <div>
@@ -12,6 +12,8 @@
                 </div>
             </mat-card>
             <mat-card *ngIf="!isLoading">
+                <img src="./assets/sign-up.jpg" alt="Sign up" fxHide.gt-md id="signup-img">
+
                 <mat-card-header>
                     <mat-toolbar style="margin-bottom: 20px;" fxLayoutAlign="center center">SIGN UP</mat-toolbar>
                 </mat-card-header>

@@ -1,6 +1,10 @@
 
 .sign-up {
-  margin: 20px;
+  margin: 15px;
+  height: 459px;
+}
+
+#signup img {
   height: 450px;
 }
 
@@ -26,4 +30,24 @@
 
 #member:hover{
   cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .sign-up {
+    margin: 0px;
+    height: 844px;
+    box-shadow: none;
+  }
+
+  .sign-up-form {
+    max-width: 100% !important;
+    margin: 65px 20px 20px;
+  }
+  #member {
+    padding: 15px 0px 30px !important;
+  }
+
+  #signup-img {
+    height: 330px;
+  }
 }

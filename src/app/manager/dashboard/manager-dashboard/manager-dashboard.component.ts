@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Title } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiService } from 'src/app/api-service/api.service';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -26,11 +27,14 @@ export class ManagerDashboardComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   constructor(
+    private titleService: Title,
     public dialog: MatDialog,
     private authService: AuthService,
     private apiService: ApiService,
     private notificationService: NotificationService
-  ) {}
+  ) {
+    this.titleService.setTitle('TMS - Dashboard');
+  }
 
   ngOnInit(): void {
     this.getUserData();

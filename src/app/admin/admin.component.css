@@ -1,6 +1,12 @@
 .admin-dashboard {
-  height: 475px;
+  height: 469px;
   margin: 10px;
+}
+
+.db-left {
+  margin: 60px;
+  height: 350px;
+  overflow: auto;
 }
 
 #manager-list,
@@ -10,11 +16,13 @@
 
 #manager-list-member,
 #deveoper-list-member {
+  margin-left: 25px;
   margin-top: 3px;
   border-radius: 5px;
   background-color: #f5f5f5;
   text-align: center;
   height: 30px;
+  width: 110px;
 }
 
 #manager-list-member:hover,
@@ -27,15 +35,6 @@
 #manager-list-member:hover p,
 #deveoper-list-member:hover p {
   color: white !important;
-}
-
-.a-db-right {
-  background-color: #f5f5f5;
-}
-
-.a-db-right h3 {
-  margin: 40px 0px 30px 50px;
-  color: #3f51b5 !important;
 }
 
 #manager-list h3,
@@ -53,25 +52,6 @@
   padding: 0px !important;
 }
 
-#m-task p {
-  font-size: 16px;
-  font-weight: 400;
-}
-
-#new-btn {
-  margin-left: 37px;
-}
-
-#it-team {
-  height: 300px;
-}
-
-#team-header {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  margin-bottom: 20px;
-}
-
 .selected {
   background-color: #3f51b5 !important;
 }
@@ -80,52 +60,9 @@
   color: white !important;
 }
 
-.devDelected {
-  background-color: #ff6c22 !important;
+#dash-img{
+  height: 400px;
 }
-
-.devDelected p {
-  color: white !important;
-}
-
-.m-db-right {
-  background-color: #f5f5f5;
-}
-
-.m-db-right h3 {
-  margin: 30px 0px 30px 50px;
-  color: #3f51b5 !important;
-}
-
-#m-task {
-  width: 90%;
-  border-radius: 5px;
-  background-color: #fff;
-  margin-top: 10px;
-  padding: 10px;
-}
-
-#m-task:hover {
-  background-color: #3f51b5 !important;
-  color: #fff;
-  cursor: pointer;
-}
-
-#del-btn {
-  color: hsl(4, 90%, 58%) !important;
-  margin: 40px 0px 30px 5px;
-  cursor: pointer;
-}
-
-#del-btn mat-icon {
-  font-size: 20px !important;
-}
-
-#it-team button {
-  font-size: 12px !important;
-}
-
-/* Profile Css */
 
 .profile {
   margin: 20px;
@@ -134,7 +71,13 @@
 
 .user-profile-data {
   height: 370px;
-  margin: 50px;
+  margin-top: 50px;
+  width: 70%;
+ 
+}
+
+.user-profile-data img {
+  height: 100%;
 }
 
 #br-10 {
@@ -143,6 +86,72 @@
   justify-content: center;
 }
 
+.user-profile-data h3 {
+  font-size: 18px !important;
+  word-spacing: 2px;
+}
+
 #usd {
   height: 400px;
+}
+
+#user-img {
+  height: 150px;
+  border-radius: 50%;
+}
+
+@media (max-width: 900px) {
+  .admin-dashboard {
+    height: 730px;
+    margin: 0px;
+    box-shadow: none;
+  }
+
+  .db-left {
+    margin: 30px 0px 0px 15px;
+    height: 400px;
+    overflow: auto;
+  }
+
+  #manager-list-member p,
+  #deveoper-list-member p {
+    font-size: 11px;
+  }
+
+  #manager-list h3,
+  #developer-list h3 {
+    font-size: 14px !important;
+  }
+
+  #dash-img{
+    height: 300px;
+  }
+  
+  .user {
+    margin-top: 10px;
+  }
+
+  .user-profile-data{
+    height: 330px;
+  }
+
+  #user-img {
+    height: 100px;
+    margin-bottom: 10px;
+
+  }
+
+  .user-profile-data img {
+    height: 80%;
+    width: 100%;
+  }
+
+  #usd button {
+    margin-bottom: 15px;
+    font-size: 10px;
+  }
+
+  #user-data span {
+    font-size: 13px !important;
+  }
 }

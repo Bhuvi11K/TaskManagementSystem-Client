@@ -17,7 +17,7 @@ export class TeamModalDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
-    private dialogRef: MatDialogRef<TeamModalDialogComponent>,
+    private dialogRef: MatDialogRef<TeamModalDialogComponent>
   ) {
     this.managers = this.data.managers;
     this.unmappedDevelopers = this.data.unmappedDevelopers;
@@ -29,12 +29,16 @@ export class TeamModalDialogComponent {
 
   ngOnInit(): void {}
 
-
   addTeam() {
     if (this.teamForm.valid) {
       const managerId = this.teamForm.value.manager;
+      const selectedManager = this.managers.find(
+        (manager) => manager.id === managerId
+      );
+      const managerName = selectedManager ? selectedManager.name : '';
+
       const developerId = this.teamForm.value.developer;
-      this.dialogRef.close({ managerId, developerId });
+      this.dialogRef.close({ managerId, managerName, developerId });
     }
   }
 

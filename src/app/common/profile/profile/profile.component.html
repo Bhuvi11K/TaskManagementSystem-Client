@@ -1,41 +1,36 @@
-<mat-card class="profile"  fxLayout.lt-md="column" fxLayout.gt-md="row">
+<mat-card class="profile" fxLayout.lt-md="column" fxLayout="row">
 
-    <div fxHide.lt-md fxFlex.gt-md="50%" fxLayoutAlign="center center">
-        <img src="./assets/profile.jpg" alt="Profile" style="height: 450px;">
-    </div>
-
-    <div fxFlex.lt-md="100%" fxFlex.gt-md="50%" class="user">
-        <div class="user-profile">
-            <mat-card class="user-profile-data">
+    <div fxFlex.lt-md="100" fxFlex="50" class="user">
+        <div  class="user-profile"  >
+            <mat-card class="user-profile-data" >
                 <mat-card-header>
                     <mat-toolbar id="br-10">
                         <h3>Welcome {{ userData.name }}!</h3>
                     </mat-toolbar>
                 </mat-card-header>
-                <mat-card-content fxLayout.lt-md="column" fxLayout.gt-md="row" id="usd">
-                    <div fxFlex.lt-md="100%" fxFlex.gt-md="50%" fxLayoutAlign="center center" fxLayout="column">
+                <mat-card-content fxLayout="row" id="usd">
+                    <div fxFlex.lt-md="40" fxFlex="50" fxLayoutAlign="center center" fxLayout="column">
                         <div>
-                            <img src="./assets/user.jpg" alt="user" style="height: 150px;border-radius: 50%;"
-                                fxLayoutAlign="center center">
+                            <img src="./assets/user.jpg" alt="user" id="user-img" fxLayoutAlign="center center">
                         </div>
                         <div>
-                            <button mat-raised-button color="primary" fxLayoutAlign="center center" style="margin-top: 10px;"
-                            (click)="openProfileEditDialog()">
+                            <button mat-raised-button color="primary" fxLayoutAlign="center center"
+                                style="margin-top: 10px;" (click)="openProfileEditDialog()">
                                 Edit Profile
                             </button>
                         </div>
                     </div>
-                    <div fxFlex.lt-md="100%" fxFlex.gt-md="50%" fxLayoutAlign.gt-md="start center" fxLayoutAlign.lt-md="center center">
+                    <div fxFlex.lt-md="60" fxFlex="50" fxLayoutAlign="start center">
                         <mat-list>
-                            <mat-list-item>
+                            <mat-list-item id="user-data">
                                 <span matListItemTitle>Name</span>
                                 <span matListItemLine>{{ userData.name }}</span>
                             </mat-list-item>
-                            <mat-list-item>
+                            <mat-list-item id="user-data">
                                 <span matListItemTitle>Role</span>
                                 <span matListItemLine>{{ userData.role }}</span>
                             </mat-list-item>
-                            <mat-list-item>
+                            <mat-list-item id="user-data">
                                 <span matListItemTitle>Email</span>
                                 <span matListItemLine>{{ userData.email }}</span>
                             </mat-list-item>
@@ -45,4 +40,9 @@
             </mat-card>
         </div>
     </div>
+
+    <div  fxFlex.lt-md="100%" fxFlex="50"  fxLayoutAlign="center center">
+        <img src="./assets/profile.jpg" alt="Profile" id="profile-img">
+    </div>
+
 </mat-card>

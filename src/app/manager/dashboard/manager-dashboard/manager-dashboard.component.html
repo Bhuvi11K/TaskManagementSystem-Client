@@ -1,64 +1,58 @@
-<mat-card class="manager-dashboard" fxLayout="row">
+<mat-card class="manager-dashboard" fxLayout.lt-md="column" fxLayout="row">
 
-  <div fxFlex="30" fxLayout="column" class="db-left">
-    <div fxFlex="80" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="30" fxFlex.lt-md="100%">
+    <div fxLayout="row" class="members-container">
       <mat-list id="developer-list">
-        <h3>YOUR TEAM</h3>
+        <h3> YOUR TEAM</h3>
         <mat-list-item id="deveoper-list-member" *ngFor="let developer of developers"
           [class.selected]="developer.name === developerName" (click)="selectedDeveloper(developer)"
           (click)="getAssignedTasks(developer.id)">
           <p>{{developer.name | titlecase}}</p>
         </mat-list-item>
-
       </mat-list>
     </div>
 
-    <div fxFlex="20" fxLayout="row" fxLayoutAlign="start center" id="btn">
-      <button mat-raised-button color="primary" (click)=" openTaskDialog()">Assign Task</button>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <button id="btn" mat-raised-button color="primary" (click)=" openTaskDialog()">
+        <mat-icon> add_task</mat-icon>Assign Task</button>
     </div>
 
   </div>
 
-  <div fxFlex="70" class="m-db-right" *ngIf="assignedTasks.length > 0">
+  <div fxFlex="70" fxFlex.lt-md="100%" class="m-db-right" *ngIf="assignedTasks.length > 0">
     <h3>ASSIGNED TASKS</h3>
 
     <div *ngFor="let task of assignedTasks" fxLayoutAlign="center center" fxLayout="column">
 
-
-      <mat-toolbar id="m-task">
-        <div fxFlex="75%" fxLayoutAlign="center center">
+      <mat-toolbar id="m-task" fxLayout="row">
+        <div fxFlex.gt-md="75%" fxFlex.lt-md="65%" fxLayoutAlign="center center">
           <p>{{ task.task }}</p>
         </div>
-        <div fxFlex="15%" fxLayoutAlign="center center">
+        <div fxFlex.gt-md="13%" fxFlex.lt-md="23%" fxLayoutAlign="center center" id="duration">
           <ng-container *ngIf="hasDuration(task.id)">
             <mat-list-item>
-              <mat-list fxLayoutAlign="center center">
+              <mat-list style="text-align: center;">
                 <span id="taskTime">
-                  <p>Completion <br> Time:
-                    <b>{{ getDuration(task.id) }}</b>
-                  </p>
+                  {{ getDuration(task.id) }}
                 </span>
-
               </mat-list>
             </mat-list-item>
           </ng-container>
           <ng-container *ngIf="!hasDuration(task.id)">
-            <span id="taskTime">
-              <p>Completion time <br> is not provided</p>
-            </span>
+            <button mat-mini-fab color="primary" id="task-btn">
+              <mat-icon>schedule</mat-icon>
+            </button>
           </ng-container>
         </div>
-        <div fxFlex="10%" fxLayoutAlign="center center">
-          <button mat-mini-fab color="primary" id="edit-btn" (click)="openEditDialog(task)">
-            <mat-icon>edit</mat-icon>
-          </button>
+        <div fxFlex.gt-md="12%" fxFlex.lt-md="12%" fxLayoutAlign="center center">
 
-          <button mat-mini-fab color="warn" id="del-btn" (click)="openDeleteDialog(task)">
-            <mat-icon>delete</mat-icon>
-          </button>
-          
+          <mat-icon mat-button id="edit-btn" color="primary" (click)="openEditDialog(task)">edit_document</mat-icon>
+
+          <mat-icon mat-button id="del-btn" color="warn" (click)="openDeleteDialog(task)" style="margin-left: 10px;">delete</mat-icon>
+
         </div>
       </mat-toolbar>
+
 
 
     </div>
@@ -66,11 +60,11 @@
 
   <div fxFlex="70" class="m-db-right" fxLayoutAlign="center center"
     *ngIf="assignedTasks.length === 0 && devSelected===true">
-    <img src="./assets/noTask.jpeg" alt="No task assigned" style="height: 350px;">
+    <img src="./assets/noTask.jpeg" alt="No task assigned" id="no-task-img">
   </div>
 
   <div fxFlex="70" class="m-db-right" fxLayoutAlign="center center" *ngIf=" devSelected===false">
-    <img src="./assets/profile.jpg" alt="Manager Dashboard" style="height: 350px;border-radius: 50%;">
+    <img src="./assets/team.jpg" alt="Team" id="dashboard-img">
   </div>
 
 </mat-card>

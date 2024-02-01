@@ -81,8 +81,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfirmModalComponent, {
       width: '350px',
       data: {
-        message: `Are you sure to delete this User? 
-                        It will delete all the corresponding data.`,
+        message: `This action will delete the entire user's data, Confirm?`,
       },
     });
 
