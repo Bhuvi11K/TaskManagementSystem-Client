@@ -42,7 +42,11 @@
   padding: 10px;
 }
 
-#m-task p,
+#m-task p {
+  font-size: 15px !important;
+  font-weight: 400 !important;
+}
+
 #team-member p,
 #deveoper-list-member p {
   font-size: 14px !important;

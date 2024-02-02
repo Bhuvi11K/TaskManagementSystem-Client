@@ -107,9 +107,16 @@ export class ManagerDashboardComponent implements OnInit, OnDestroy {
       .subscribe((taskForm) => {
         if (taskForm) {
           const developerId = taskForm.developer;
+          const selectedDeveloper = this.developers.find(
+            (developers) => developers.id === developerId
+          );
+          const developerName = selectedDeveloper ? selectedDeveloper.name : '';
+          this.developerName = developerName;
           const task = taskForm.task;
           const managerId = this.userData.id;
           console.log(
+            'developerName',
+            developerName,
             'developerId:',
             developerId,
             'task:',
