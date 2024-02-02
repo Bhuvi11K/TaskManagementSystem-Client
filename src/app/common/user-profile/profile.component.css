@@ -1,4 +1,4 @@
-.profile {
+.profile-container {
   margin: 10px;
   height: 469px;
 }
@@ -7,42 +7,37 @@
   height: 430px;
 }
 
-.user-profile-data {
+.profile-card-data {
   height: 320px;
   width: 500px;
-  margin: 75px 0px 0px 100px;
+  margin: 75px 0px 0px 50px;
 }
 
-#br-10 {
+#profile-card-header {
   border-radius: 5px;
   color: #3f51b5;
   justify-content: center;
 }
 
-#br-10 h3 {
+#profile-card-header h3 {
   font-size: 17px !important;
   word-spacing: 3px;
   letter-spacing: 1px;
 }
 
-#usd {
+#profile-card-body {
   height: 400px;
 }
 
-#user-img {
+#profile-card-body img {
   height: 150px;
   border-radius: 50%;
 }
 
+
 @media (max-width: 900px) {
 
-  .user-profile-data {
-    height: 320px;
-    width: 350px;
-    margin: 55px 0px 0px 40px !important;
-  }
-
-  .profile {
+  .profile-container {
     margin: 0px;
     box-shadow: none;
   }
@@ -52,18 +47,24 @@
     height: 350px;
   }
 
-  #br-10 {
+  .profile-card-data {
+    height: 320px;
+    width: 350px;
+    margin: 55px 0px 0px 40px !important;
+  }
+
+  #profile-card-header {
     justify-content: none;
     margin-top: 20px;
   }
 
-  #user-img {
+  #profile-card-body img {
     height: 100px;
     border-radius: 50%;
     margin: 20px 0px 10px;
   }
 
-  #usd button {
+  #profile-card-body button {
     margin-bottom: 15px;
     font-size: 10px;
   }

@@ -5,7 +5,7 @@ import { ApiService } from 'src/app/api-service/api.service';
 import { NotificationService } from 'src/app/auth/notification.service';
 import { DeleteDevModalComponent } from 'src/app/modal-dialog/delete-dev-modal/delete-dev-modal.component';
 import { TeamModalDialogComponent } from 'src/app/modal-dialog/team/team-modal-dialog/team-modal-dialog.component';
-import { User } from 'src/app/modal/user.model';
+import { User } from 'src/app/model/model';
 import { Title } from '@angular/platform-browser';
 import { ConfirmModalComponent } from 'src/app/modal-dialog/confirm-modal/confirm-modal.component';
 

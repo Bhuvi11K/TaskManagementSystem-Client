@@ -13,6 +13,14 @@
   margin-left: 114px;
 }
 
+#developer-list h3 {
+  margin: 15px 0px 20px 8px;
+  color: #3f51b5 !important;
+  font-size: 17px !important;
+  word-spacing: 2px;
+  letter-spacing: 1px;
+}
+
 #deveoper-list-member {
   margin-top: 6px;
   border-radius: 5px;
@@ -20,7 +28,11 @@
   height: 30px;
   width: 130px;
   text-align: center;
-  
+}
+
+#deveoper-list-member p {
+  font-size: 14px !important;
+  font-weight: 400 !important;
 }
 
 #deveoper-list-member:hover {
@@ -32,29 +44,30 @@
   color: white !important;
 }
 
-#m-task {
-  height:60px;
-  width: 90%;
-  border-radius: 5px;
-  background-color: #fff;
-  margin-top: 7px;
-  margin-bottom: 7px;
-  padding: 10px;
+.selected {
+  background-color: #3f51b5 !important;
 }
 
-#m-task p {
-  font-size: 15px !important;
-  font-weight: 400 !important;
+.selected p {
+  color: white !important;
 }
 
-#team-member p,
-#deveoper-list-member p {
-  font-size: 14px !important;
-  font-weight: 400 !important;
-}
-
-#btn {
+#add-task-btn {
   margin-left: 37px;
+}
+
+.manager-dashboard-right {
+  background-color: #f5f5f5;
+  overflow: auto;
+  height: 469px;
+}
+
+.manager-dashboard-right h3 {
+  margin: 20px 0px 20px 25px;
+  color: #3f51b5 !important;
+  font-size: 17px !important;
+  word-spacing: 2px;
+  letter-spacing: 1px;
 }
 
 #dashboard-img,
@@ -63,30 +76,22 @@
   border-radius: 10px;
 }
 
-.m-db-right {
-  background-color: #f5f5f5;
-  overflow: auto;
-  height: 469px;
+#task {
+  height: 60px;
+  width: 90%;
+  border-radius: 5px;
+  background-color: #fff;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  padding: 10px;
 }
 
-
-.m-db-right h3 {
-  margin: 20px 0px 20px 25px;
-  color: #3f51b5 !important;
-  font-size: 17px !important;
-  word-spacing: 2px;
-  letter-spacing: 1px;
+#task p {
+  font-size: 15px !important;
+  font-weight: 400 !important;
 }
 
-#developer-list h3 {
-  margin: 15px 0px 20px 8px;
-  color: #3f51b5 !important;
-  font-size: 17px !important;
-  word-spacing: 2px;
-  letter-spacing: 1px;
-}
-
-#m-task:hover {
+#task:hover {
   background-color: #3f51b5 !important;
   color: #fff;
   cursor: pointer;
@@ -98,66 +103,49 @@
   color: #fff !important;
   border-radius: 5px;
   padding: 10px;
-  /* margin-top: 5px; */
 }
 
-#m-task:hover #taskTime p {
-  background-color: #fff !important;
+#task-edit-btn {
   color: #3f51b5 !important;
 }
 
-.selected {
-  background-color: #3f51b5 !important;
-}
-
-.selected p {
-  color: white !important;
-}
-
-#m-task:hover #edit-btn,
-#m-task:hover #del-btn
-{
-  color: #fff !important;
-}
-
-#edit-btn ,
-#del-btn {
+#task-edit-btn,
+#task-del-btn {
   font-size: 25px !important;
 }
 
-#edit-btn {
-  color: #3f51b5 !important;
-}
-
-#edit-btn:hover {
-  color: white !important;
-}
-
-#del-btn:hover {
-  color: white !important;
-}
-
-
-#m-task:hover #taskTime,
-#m-task:hover #task-btn {
+#task:hover #taskTime,
+#task:hover #task-btn {
   background-color: #fff !important;
   color: #3f51b5 !important;
 }
 
-.no-devs img ,.no-task img{
+#task:hover #taskTime p {
+  background-color: #fff !important;
+  color: #3f51b5 !important;
+}
+
+#task:hover #task-edit-btn,
+#task:hover #task-del-btn,
+#task-edit-btn:hover,
+#task-del-btn:hover {
+  color: #fff !important;
+}
+
+.no-devs img,
+.no-task img {
   height: 350px;
   border-radius: 8px;
 }
 
-.no-devs p,.no-task p {
+.no-devs p,
+.no-task p {
   background-color: #3f51b5 !important;
   color: white;
   border-radius: 8px;
   text-align: center;
   padding: 12px;
 }
-
-
 
 @media (max-width: 900px) {
   .manager-dashboard {
@@ -176,12 +164,12 @@
     margin-left: 134px;
   }
 
-  #m-db-right {
-    height: 400px;
+  #add-task-btn {
+    margin: 25px 0px 25px 40px;
   }
 
-  #btn {
-    margin: 25px 0px 25px 40px;
+  #manager-dashboard-right {
+    height: 400px;
   }
 
   #no-task-img,
@@ -190,9 +178,13 @@
     margin: 30px 0px;
   }
 
-  #m-task {
+  #task {
     width: 95%;
-    
+  }
+
+  #task p {
+    font-size: 14px;
+    font-weight: 400;
   }
 
   #taskTime {
@@ -208,28 +200,24 @@
     width: 30px;
   }
 
-  #edit-btn ,
-  #del-btn  {
+  #task-edit-btn,
+  #task-del-btn {
     font-size: 20px !important;
   }
 
-
-  #m-task p,
-  #team-member p {
-    font-size: 14px;
-    font-weight: 400;
-  }
-
-  .no-devs img,  .no-task img {
+  .no-devs img,
+  .no-task img {
     height: 280px;
     margin-top: 30px;
   }
 
-  .no-devs,.no-task {
+  .no-devs,
+  .no-task {
     text-align: center;
   }
 
-  .no-devs p,.no-task p {
+  .no-devs p,
+  .no-task p {
     padding: 14px;
     font-size: 14px;
   }

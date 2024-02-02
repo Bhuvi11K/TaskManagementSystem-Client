@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { User } from 'src/app/modal/user.model';
+import { User } from 'src/app/model/model';
 
 @Component({
   selector: 'app-team-modal-dialog',

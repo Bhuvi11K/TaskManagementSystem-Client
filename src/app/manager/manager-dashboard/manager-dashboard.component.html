@@ -14,18 +14,18 @@
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center">
-      <button id="btn" mat-raised-button color="primary" (click)=" openTaskDialog()">
+      <button id="add-task-btn" mat-raised-button color="primary" (click)=" openTaskDialog()">
         <mat-icon> add_task</mat-icon>Assign Task</button>
     </div>
 
   </div>
 
-  <div fxFlex="70" fxFlex.lt-md="100%" class="m-db-right" *ngIf="assignedTasks.length > 0">
+  <div fxFlex="70" fxFlex.lt-md="100%" class="manager-dashboard-right" *ngIf="assignedTasks.length > 0">
     <h3>ASSIGNED TASKS</h3>
 
     <div *ngFor="let task of assignedTasks" fxLayoutAlign="center center" fxLayout="column">
 
-      <mat-toolbar id="m-task" fxLayout="row">
+      <mat-toolbar id="task" fxLayout="row">
         <div fxFlex.gt-md="75%" fxFlex.lt-md="65%" fxLayoutAlign="center center">
           <p>{{ task.task }}</p>
         </div>
@@ -47,9 +47,9 @@
         </div>
         <div fxFlex.gt-md="12%" fxFlex.lt-md="12%" fxLayoutAlign="center center">
 
-          <mat-icon mat-button id="edit-btn" color="primary" (click)="openEditDialog(task)">edit_document</mat-icon>
+          <mat-icon mat-button id="task-edit-btn" color="primary" (click)="openEditDialog(task)">edit_document</mat-icon>
 
-          <mat-icon mat-button id="del-btn" color="warn" (click)="openDeleteDialog(task)" style="margin-left: 10px;">delete</mat-icon>
+          <mat-icon mat-button id="task-del-btn" color="warn" (click)="openDeleteDialog(task)" style="margin-left: 10px;">delete</mat-icon>
 
         </div>
       </mat-toolbar>
@@ -59,7 +59,7 @@
     </div>
   </div>
 
-  <div fxFlex="70"  class="m-db-right" fxLayoutAlign="center center" 
+  <div fxFlex="70"  class="manager-dashboard-right" fxLayoutAlign="center center" 
   *ngIf="assignedTasks.length === 0 && devSelected===true">
     <mat-card-content class="no-task">
       <img src="./assets/noTask.jpeg">
@@ -69,7 +69,7 @@
     </mat-card-content>
   </div>
 
-  <div fxFlex="70" class="m-db-right" fxLayoutAlign="center center" *ngIf=" devSelected===false">
+  <div fxFlex="70" class="manager-dashboard-right" fxLayoutAlign="center center" *ngIf=" devSelected===false">
     <img src="./assets/team.jpg" alt="Team" id="dashboard-img">
   </div>
 

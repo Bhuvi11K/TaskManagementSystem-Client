@@ -1,20 +1,20 @@
 <mat-card class="dev-dashboard" fxLayout.lt-md="column" fxLayout="row" *ngIf="assignedTasks.length > 0">
 
-  <div fxFlex.lt-md="100%" fxLayout="column" fxFlex="35" fxLayout="row" class="d-db-left" fxLayoutAlign="center center">
-    <img src="./assets/tasks.jpg" alt="Profile" id="dev-dash-img">
+  <div fxFlex.lt-md="100%" fxLayout="column" fxFlex="35" fxLayout="row"  fxLayoutAlign="center center">
+    <img src="./assets/tasks.jpg" alt="Task" id="task-img">
   </div>
 
 
-  <div fxFlex.lt-md="100%" fxLayout="column" fxFlex="65" class="d-db-right">
+  <div fxFlex.lt-md="100%" fxLayout="column" fxFlex="65" class="dev-dashboard-right">
     <h3>YOUR TASKS </h3>
 
     <div *ngFor="let task of assignedTasks" fxLayoutAlign="center center" fxLayout="column">
 
-      <mat-toolbar id="d-task" fxLayout="row">
+      <mat-toolbar id="dev-task" fxLayout="row">
         <div fxFlex="78%" fxLayoutAlign="center center">
           <p>{{ task.task }}</p>
         </div>
-        <div fxFlex="22%" fxLayoutAlign="center center" id="duration">
+        <div fxFlex="22%" fxLayoutAlign="center center" >
           <ng-container *ngIf="hasDuration(task.id)">
             <mat-list-item>
               <mat-list style="text-align: center;">

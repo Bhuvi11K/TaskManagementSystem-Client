@@ -2,17 +2,17 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Title } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
-import { ApiService } from '../api-service/api.service';
-import { NotificationService } from '../auth/notification.service';
-import { User } from '../modal/user.model';
-import { ConfirmModalComponent } from '../modal-dialog/confirm-modal/confirm-modal.component';
+import { ApiService } from '../../api-service/api.service';
+import { NotificationService } from '../../auth/notification.service';
+import { User } from '../../model/model';
+import { ConfirmModalComponent } from '../../modal-dialog/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css'],
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css'],
 })
-export class AdminComponent implements OnInit, OnDestroy {
+export class UsersComponent implements OnInit, OnDestroy {
   managers: User[] = [];
   juniorDevelopers: User[] = [];
   userId!: number;
