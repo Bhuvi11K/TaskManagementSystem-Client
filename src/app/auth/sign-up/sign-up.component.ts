@@ -15,6 +15,7 @@ import { Title } from '@angular/platform-browser';
 export class SignUpComponent implements OnDestroy {
   signupForm!: FormGroup;
   isLoading = false;
+  hide = true;
   private unsubscribe$ = new Subject<void>();
 
   constructor(

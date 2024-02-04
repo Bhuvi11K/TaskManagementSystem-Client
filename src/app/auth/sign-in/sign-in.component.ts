@@ -14,6 +14,7 @@ import { Title } from '@angular/platform-browser';
 export class SignInComponent implements OnDestroy {
   loginForm!: FormGroup;
   isLoading = false;
+  hide = true;
   private unsubscribe$ = new Subject<void>();
 
   constructor(

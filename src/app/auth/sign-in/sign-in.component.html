@@ -1,4 +1,4 @@
-<mat-card class="sign-in" fxLayout.lt-md="column" fxLayout="row">
+<mat-card class="sign-in-container" fxLayout.lt-md="column" fxLayout="row">
 
     <div id="signin" fxHide.lt-md fxFlex.lt-md="100%" fxFlex="50%" fxLayout.lt-md="column" fxLayout="row"
         fxLayoutAlign="center center">
@@ -32,7 +32,9 @@
 
                         <mat-form-field>
                             <mat-label>Password</mat-label>
-                            <input matInput formControlName="password" placeholder="Password" type="password">
+                            <input matInput formControlName="password" placeholder="Password" type="password" [type]="hide?'password':'text'">
+                            <i class="material-icons" id="eye-icon" matSuffix (click)="hide=!hide">
+                                {{hide?'visibility':'visibility_off'}}</i>
                             <mat-error
                                 *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
                                 Please enter a password.

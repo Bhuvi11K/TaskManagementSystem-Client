@@ -1,4 +1,4 @@
-.sign-in {
+.sign-in-container {
   margin: 15px;
   height: 459px;
 }
@@ -12,14 +12,20 @@
   margin-top: 50px;
 }
 
+.loader {
+  margin-top: 18px;
+  height: 330px;
+}
+
+#eye-icon {
+  margin-right: 11px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
 .mat-button-disabled {
   color: #fff;
   background-color: #3f51b5;
-  /* margin-bottom: 5% !important; */
-}
-
-.loader {
-  height: 330px;
 }
 
 #member p {
@@ -33,7 +39,7 @@
 }
 
 @media (max-width: 900px) {
-  .sign-in {
+  .sign-in-container {
     margin: 0px;
     height: 844px;
     box-shadow: none;
@@ -44,15 +50,16 @@
     margin: 65px 20px 20px;
   }
 
-  #member {
-    padding: 15px 0px 30px !important;
+  .loader {
+    margin-top: 160px;
+    box-shadow: none;
   }
 
   #signin-img {
     height: 330px;
   }
 
-  .loader {
-    margin-top: 40px;
+  #member {
+    padding: 15px 0px 30px !important;
   }
 }
