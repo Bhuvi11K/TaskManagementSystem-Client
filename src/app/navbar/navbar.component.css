@@ -1,5 +1,6 @@
 .navbar {
   justify-content: space-between;
+  /* background: linear-gradient(to right, #6a11cb, #1a73e8); */
 }
 
 button {
@@ -54,8 +55,7 @@ button {
 }
 
 @media (max-width: 900px) {
-
-  .mat-sidenav-fixed{
+  .mat-sidenav-fixed {
     position: relative;
     top: 0px !important;
   }

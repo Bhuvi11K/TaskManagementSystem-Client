@@ -26,6 +26,7 @@
 .mat-button-disabled {
   color: #fff;
   background-color: #3f51b5;
+  /* background: linear-gradient(to right, #6A11CB, #1A73E8); */
 }
 
 #member p {

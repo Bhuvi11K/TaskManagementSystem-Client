@@ -24,6 +24,8 @@ export class AppComponent implements OnInit {
 
       console.log('Token exists:', token);
     } else {
+      this.router.navigate(['/signin']);
+
       console.log('Token does not exist');
     }
   }
