@@ -1,12 +1,18 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  // private _userRole = new BehaviorSubject<string>('');
+
+  // get userRole(): Observable<string> {
+  //   return this._userRole.asObservable();
+  // }
+
   isLoggedIn = false;
 
   private apiUrl = 'http://localhost:1102/api';
@@ -35,6 +41,8 @@ export class AuthService {
       catchError(this.handleError),
       tap((response) => {
         if (response && response.token) {
+          // console.log('Login User Role :', response.user.role);
+          // this._userRole.next(response.user.role);
           localStorage.setItem(this.tokenKey, response.token);
           localStorage.setItem('userData', JSON.stringify(response.user));
           this.isLoggedIn = true;

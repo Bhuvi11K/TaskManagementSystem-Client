@@ -13,6 +13,7 @@ import { ConfirmModalComponent } from '../modal-dialog/confirm-modal/confirm-mod
 export class NavbarComponent implements OnInit {
   private unsubscribe$ = new Subject<void>();
   showUser: boolean = false;
+  // userRole = '';
 
   constructor(
     public dialog: MatDialog,
@@ -21,6 +22,11 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+  //   this.authService.userRole.subscribe((role) => {
+  //     this.userRole = role;
+  //     console.log('User Role - Navbar :', this.userRole);
+  //   });
+
     this.fetchUserRole();
   }
 
